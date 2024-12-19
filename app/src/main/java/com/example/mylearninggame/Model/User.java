@@ -2,7 +2,8 @@ package com.example.mylearninggame.Model;
 
 public class User {
     String id;
-    String fName, lName, phone, email, password;
+    String fName, lName, phone, email, password, description;
+    int coins;
 
     public User(String id, String fName, String lName, String phone, String email, String password) {
         this.id = id;

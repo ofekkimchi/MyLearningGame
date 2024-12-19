@@ -13,13 +13,22 @@
         android:theme="@style/Theme.MyLearningGame"
         tools:targetApi="31">
         <activity
-            android:name=".Singup"
+            android:name=".Screens.EnglishLevels"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".Screens.HebrewLevels"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Screens.Levels"
+            android:exported="false" />
+        <activity
+            android:name=".Screens.Singup"
+            android:exported="false" />
+        <activity
+            android:name=".Screens.Login"
+            android:exported="false" />
+        <activity
+            android:name=".Screens.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

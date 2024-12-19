@@ -1,4 +1,4 @@
-package com.example.mylearninggame;
+package com.example.mylearninggame.Screens;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +14,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mylearninggame.Model.User;
+import com.example.mylearninggame.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
