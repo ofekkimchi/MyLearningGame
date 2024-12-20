@@ -2,7 +2,6 @@ package com.example.mylearninggame.Screens;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,35 +12,40 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mylearninggame.R;
-import com.example.mylearninggame.Model.AuthenticationService;
 
-public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG = "MainActivity";
-    private AuthenticationService authenticationService;
+public class Landing extends AppCompatActivity implements View.OnClickListener {
+    Button btnLoginLanding, btnSignUpLanding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_landing);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        authenticationService = AuthenticationService.getInstance();
-
-
-        if (!authenticationService.isUserSignedIn()) {
-            Log.d(TAG, "User not signed in, redirecting to LandingActivity");
-            Intent landingIntent = new Intent(MainActivity.this, Landing.class);
-            startActivity(landingIntent);
-            finish();
-        }
-
+        initviews();
     }
 
+    private void initviews() {
+        btnSignUpLanding = findViewById(R.id.btnSignUpLanding);
+        btnSignUpLanding.setOnClickListener(this);
+        btnLoginLanding = findViewById(R.id.btnLogInLanding);
+        btnLoginLanding.setOnClickListener(this);
+    }
 
-
+    public void onClick(View view) {
+        if (view == btnSignUpLanding) {
+            Intent signup = new Intent(getApplicationContext(), Singup.class);
+            startActivity(signup);
+        }
+        if (view == btnLoginLanding) {
+            Intent login = new Intent(getApplicationContext(), Login.class);
+            startActivity(login);
+        }
+    }
 }
+
+
