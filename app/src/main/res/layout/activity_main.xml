@@ -8,40 +8,11 @@
     android:background="#90CBD3"
     tools:context=".Screens.MainActivity">
 
-    <Button
-        android:id="@+id/btnGoSingin"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginEnd="70dp"
-        android:backgroundTint="#BE171A50"
-        android:text="Sign in"
-        android:textSize="20dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnGoSingup"
-        app:layout_constraintEnd_toStartOf="@+id/btnGoSingup"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnGoSingup"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="46dp"
-        android:layout_marginBottom="74dp"
-        android:backgroundTint="#BE171A50"
-        android:text="Sign up"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnLevels"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnGoSingin"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="95dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoSingup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
@@ -50,13 +21,23 @@
         android:id="@+id/btnLevels"
         android:layout_width="120dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="230dp"
+        android:layout_marginBottom="376dp"
         android:backgroundTint="#BE171A50"
         android:text="Levels"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoSingup" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="11dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/btnLevels"
+        app:layout_constraintTop_toBottomOf="@+id/btnLevels" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

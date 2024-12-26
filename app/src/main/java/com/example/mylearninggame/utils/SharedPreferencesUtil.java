@@ -1,4 +1,4 @@
-package com.example.mylearninggame.Model;
+package com.example.mylearninggame.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
