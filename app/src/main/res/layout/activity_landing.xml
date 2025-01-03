@@ -14,8 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="47dp"
-        android:text="Log ih"
+        android:text="Log In"
         android:textSize="20dp"
+        android:backgroundTint="#BE171A50"
         app:layout_constraintStart_toStartOf="@+id/btnSignUpLanding"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUpLanding" />
 
@@ -24,8 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="sign up"
+        android:text="Sign Up"
         android:textSize="20dp"
+        android:backgroundTint="#BE171A50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />

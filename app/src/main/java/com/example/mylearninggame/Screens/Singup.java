@@ -107,7 +107,7 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("TAG", "createUserWithEmail:success");
 
-                        User newUser=new User(mAuth.getUid(), fName, lName, phone, email,pass);
+                        User newUser=new User(mAuth.getUid(), fName, lName, phone, email,pass );
                         myRef.child(mAuth.getUid()).setValue(newUser);
                         SharedPreferences.Editor editor = sharedpreferences.edit();
 

@@ -13,13 +13,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mylearninggame.R;
-import com.example.mylearninggame.Model.AuthenticationService;
+import com.example.mylearninggame.Services.AuthenticationService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     private AuthenticationService authenticationService;
-    Button btn;
+    Button btnSignOut, btnLevels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +45,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initviews() {
-        btn=findViewById(R.id.button);
-        btn.setOnClickListener(this);
+        btnSignOut=findViewById(R.id.btnSignOut);
+        btnSignOut.setOnClickListener(this);
+        btnLevels=findViewById(R.id.btnLevels);
+        btnLevels.setOnClickListener(this);
+
     }
 
 
     @Override
     public void onClick(View view) {
-        if (view == btn) {
-            Intent bt = new Intent(getApplicationContext(), Landing.class);
-            startActivity(bt);
+        if (view == btnSignOut) {
+            AuthenticationService.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), Landing.class);
+            startActivity(intent);
+        }
+        if (view == btnLevels) {
+            Intent intent = new Intent(getApplicationContext(), Levels.class);
+            startActivity(intent);
         }
     }
 }

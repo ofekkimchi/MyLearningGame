@@ -1,4 +1,4 @@
-package com.example.mylearninggame.Model;
+package com.example.mylearninggame.Services;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

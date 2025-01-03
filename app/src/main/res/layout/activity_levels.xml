@@ -12,26 +12,39 @@
     <Button
         android:id="@+id/btnHebrewLevels"
         android:layout_width="150dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="293dp"
         android:text="Hebrew Levels"
         android:textSize="18dp"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="368dp" />
+        android:backgroundTint="#BE171A50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEnglishLevels" />
 
     <Button
         android:id="@+id/btnEnglishLevels"
         android:layout_width="150dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="#BE171A50"
         android:text="English Levels"
         android:textSize="18dp"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="262dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btnHebrewLevels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/levels"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="107dp" />
+        android:layout_marginTop="107dp"
+        android:layout_marginBottom="57dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnglishLevels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/levels" />
 </androidx.constraintlayout.widget.ConstraintLayout>
