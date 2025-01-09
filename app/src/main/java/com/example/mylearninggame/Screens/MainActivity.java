@@ -51,11 +51,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         }
 
-        databaseService.getUser(authenticationService.getCurrentUser(), (user){
-            SharedPreferencesUtil.saveUser(MainActivity.this, user);
-            currentUser = user;
-            // call again update view
-        });
+        databaseService.getUser(authenticationService.getCurrentUserUid(), new DatabaseService.DatabaseCallback<User>() {
+                @Override
+                public void onCompleted(User user) {
+                    SharedPreferencesUtil.saveUser(getApplicationContext(), user);
+                    // update view
+                }
+
+                @Override
+                public void onFailed(Exception e) {
+
+                }
+            }
+        );
 
         currentUser = SharedPreferencesUtil.getUser(this);
         // update view
