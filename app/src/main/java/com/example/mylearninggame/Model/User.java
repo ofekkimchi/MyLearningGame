@@ -3,6 +3,7 @@ package com.example.mylearninggame.Model;
 public class User {
     String id;
     String fname, lname, phone, email, password;
+    boolean isAdmin = false;
 
     public User(String id, String fname, String lname, String phone, String email, String password) {
         this.id = id;
@@ -11,11 +12,11 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.password = password;
+
     }
 
     public User() {
     }
-
     public String getId() {
         return id;
     }
@@ -63,6 +64,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -72,6 +81,7 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", isAdmin='" + isAdmin + '\'' +
                 '}';
     }
 }

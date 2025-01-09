@@ -17,13 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylearninggame.Model.User;
 import com.example.mylearninggame.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Singup extends AppCompatActivity implements View.OnClickListener {
     TextView tvReg;
@@ -31,6 +24,7 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
     Button btnReg;
 
     String fName,lName, phone, email, pass;
+
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference myRef;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,14 +13,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mylearninggame.Model.User;
 import com.example.mylearninggame.R;
 import com.example.mylearninggame.Services.AuthenticationService;
+import com.example.mylearninggame.Services.DatabaseService;
+import com.example.mylearninggame.utils.SharedPreferencesUtil;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     private AuthenticationService authenticationService;
-    Button btnSignOut, btnLevels;
+    private DatabaseService databaseService;
+    Button btnSignOut, btnLevels, btnAddQuestion;
+    boolean IsAdmin;
+    User currentUser;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +44,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         authenticationService = AuthenticationService.getInstance();
         initviews();
 
-
         if (!authenticationService.isUserSignedIn()) {
             Log.d(TAG, "User not signed in, redirecting to LandingActivity");
             Intent landingIntent = new Intent(MainActivity.this, Landing.class);
             startActivity(landingIntent);
             finish();
         }
+
+        databaseService.getUser(authenticationService.getCurrentUser(), (user){
+            SharedPreferencesUtil.saveUser(MainActivity.this, user);
+            currentUser = user;
+            // call again update view
+        });
+
+        currentUser = SharedPreferencesUtil.getUser(this);
+        // update view
+
 
     }
 
@@ -49,8 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSignOut.setOnClickListener(this);
         btnLevels=findViewById(R.id.btnLevels);
         btnLevels.setOnClickListener(this);
+        btnAddQuestion=findViewById(R.id.btnAddQuestion);
+        btnAddQuestion.setOnClickListener(this);
 
     }
+
+
 
 
     @Override
@@ -62,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (view == btnLevels) {
             Intent intent = new Intent(getApplicationContext(), Levels.class);
+            startActivity(intent);
+        }
+        if (view==btnAddQuestion && IsAdmin==false){
+            Toast.makeText(this, "You are not an admin", Toast.LENGTH_SHORT).show();
+        } else if (view==btnAddQuestion && IsAdmin==true) {
+            Intent intent = new Intent(getApplicationContext(), AddQuestion.class);
             startActivity(intent);
         }
     }

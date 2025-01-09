@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class AuthenticationService {
     public interface AuthCallback {
-        void onCompleted(Object object);
+        void onCompleted(String uid);
         void onFailed(Exception e);
     }
 
@@ -28,7 +28,7 @@ public class AuthenticationService {
     public void signIn(String email, String password, AuthCallback callback) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                callback.onCompleted(true);
+                callback.onCompleted(getCurrentUserUid());
             } else {
                 callback.onFailed(task.getException());
             }
@@ -38,7 +38,7 @@ public class AuthenticationService {
     public void signUp(String email, String password, AuthCallback callback) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                callback.onCompleted(task.getResult().getUser());
+                callback.onCompleted(getCurrentUserUid());
             } else {
                 callback.onFailed(task.getException());
             }
@@ -49,8 +49,8 @@ public class AuthenticationService {
         mAuth.signOut();
     }
 
-    public FirebaseUser getCurrentUser() {
-        return mAuth.getCurrentUser();
+    public String getCurrentUserUid() {
+        return mAuth.getCurrentUser().getUid();
     }
 
     public boolean isUserSignedIn() {
