@@ -6,6 +6,6 @@ public class Profile extends User {
     int coins;
 
     public Profile(String id, String fname, String lname, String phone, String email, String password) {
-        super(id, fname, lname, phone, email, password);
+        super(id, fname, lname, phone, email, password,false);
     }
 }

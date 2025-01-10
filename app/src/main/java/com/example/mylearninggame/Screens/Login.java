@@ -17,20 +17,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mylearninggame.Model.User;
 import com.example.mylearninggame.R;
+import com.example.mylearninggame.Services.AuthenticationService;
+import com.example.mylearninggame.Services.DatabaseService;
+import com.example.mylearninggame.utils.SharedPreferencesUtil;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
-    Button btnlog;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    private FirebaseAuth mAuth;
+    Button btnlog, btnBack;
     EditText etemail, etpass;
 
     String email, pass;
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    SharedPreferences sharedpreferences;
-    private String email2;
-    private String pass2;
+    AuthenticationService authenticationService;
+    DatabaseService databaseService;
 
     public Login() {
     }
@@ -45,55 +44,85 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        mAuth = FirebaseAuth.getInstance();
-        database=FirebaseDatabase.getInstance();
+        databaseService=DatabaseService.getInstance();
+        authenticationService=AuthenticationService.getInstance();
 
         etemail = findViewById(R.id.etLoginEmail);
         etpass = findViewById(R.id.etLoginPassword);
 
-        btnlog=(Button)findViewById(R.id.btnLogIn);
+        btnlog=findViewById(R.id.btnLogIn);
         btnlog.setOnClickListener(this);
+        btnBack=findViewById(R.id.btnBackLogin);
+        btnBack.setOnClickListener(this);
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        email2 = sharedpreferences.getString("email", "");
-        pass2 = sharedpreferences.getString("password", "");
-        etemail.setText(email2);
-        etpass.setText(pass2);
     }
 
     @Override
     public void onClick(View view) {
+        if (view==btnBack){
+            Intent intent = new Intent(getApplicationContext(), Landing.class);
+            startActivity(intent);
+        }
         email = etemail.getText().toString();
         pass = etpass.getText().toString();
+
+        if (!isValid(email, pass)) {
+            Toast.makeText(getApplicationContext(), "The password or Email is invalid", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+
         Log.d("TAG", "onClick:btnSignIn");
-        mAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        authenticationService.signIn(email, pass, new AuthenticationService.AuthCallback() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("TAG", "signInWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    final String userUid = user.getUid();
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString("email", email);
-                    editor.putString("password", pass);
-                    editor.commit();
-                    Intent go = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(go);
-                }
-                else {
+            public void onCompleted(String uid) {
+                // Sign in success, update UI with the signed-in user's information
+                Log.d("TAG", "signInWithEmail:success");
+                databaseService.getUser(uid, new DatabaseService.DatabaseCallback<User>() {
+                    @Override
+                    public void onCompleted(User user) {
+                        SharedPreferencesUtil.saveUser(Login.this, user);
+                        Intent go = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(go);
+                    }
 
+                    @Override
+                    public void onFailed(Exception e) {
 //                                // If sign in fails, display a message to the user.
-                    Log.w("TAG", "signInWithEmail:failure", task.getException());
-                    Toast.makeText(getApplicationContext(), "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-//                                updateUI(null);
-                }
+                        Log.w("TAG", "signInWithEmail:failure", e);
+                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        authenticationService.signOut();
+                    }
+                });
 
-                // ...
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.w("TAG", "signInWithEmail:failure", e);
+                Toast.makeText(getApplicationContext(), "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+
+    private boolean isValid(String email, String pass) {
+        if (!email.contains("@")){
+            Toast.makeText(getApplicationContext(),"כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(pass.length()<6){
+            Toast.makeText(getApplicationContext(),"הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(pass.length()>20){
+            Toast.makeText(getApplicationContext(),"הסיסמה ארוכה מדי", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 }

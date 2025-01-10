@@ -3,15 +3,16 @@ package com.example.mylearninggame.Model;
 public class User {
     String id;
     String fname, lname, phone, email, password;
-    boolean isAdmin = false;
+    boolean isAdmin;
 
-    public User(String id, String fname, String lname, String phone, String email, String password) {
+    public User(String id, String fname, String lname, String phone, String email, String password, boolean isAdmin) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.isAdmin = isAdmin;
 
     }
 

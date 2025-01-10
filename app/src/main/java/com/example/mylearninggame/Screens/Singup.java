@@ -17,35 +17,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylearninggame.Model.User;
 import com.example.mylearninggame.R;
+import com.example.mylearninggame.Services.AuthenticationService;
+import com.example.mylearninggame.Services.DatabaseService;
+import com.example.mylearninggame.utils.SharedPreferencesUtil;
 
 public class Singup extends AppCompatActivity implements View.OnClickListener {
-    TextView tvReg;
     EditText etFName, etLName, etPhone, etEmail, etPass;
     Button btnReg;
 
     String fName,lName, phone, email, pass;
-
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    SharedPreferences sharedpreferences;
+    AuthenticationService authenticationService;
+    DatabaseService databaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_singup);
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        authenticationService = AuthenticationService.getInstance();
+        databaseService = DatabaseService.getInstance();
+
         init_views();
 
         btnReg.setOnClickListener(this);
-
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
-
-        mAuth = FirebaseAuth.getInstance();
-
     }
 
     private void init_views() {
@@ -66,7 +60,7 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
         pass=etPass.getText().toString();
 
         //check if registration is valid
-        Boolean isValid=true;
+        boolean isValid=true;
         if (fName.length()<2){
             Toast.makeText(Singup.this,"שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
             isValid = false;
@@ -92,38 +86,41 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
             isValid = false;
         }
 
-        if (isValid==true){
+        authenticationService.signUp(email, pass, new AuthenticationService.AuthCallback() {
+            @Override
+            public void onCompleted(String uid) {
+                // Sign in success, update UI with the signed-in user's information
+                Log.d("TAG", "createUserWithEmail:success");
 
-            mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("TAG", "createUserWithEmail:success");
-
-                        User newUser=new User(mAuth.getUid(), fName, lName, phone, email,pass );
-                        myRef.child(mAuth.getUid()).setValue(newUser);
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                        editor.putString("email", email);
-                        editor.putString("password", pass);
-                        editor.commit();
-
+                User newUser=new User(uid, fName, lName, phone, email,pass, false);
+                databaseService.createNewUser(newUser, new DatabaseService.DatabaseCallback<Void>() {
+                    @Override
+                    public void onCompleted(Void object) {
+                        SharedPreferencesUtil.saveUser(getApplicationContext(), newUser);
                         Intent goLog=new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(goLog);
-
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(Singup.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-
                     }
 
-                }
-            });
-        }
+                    @Override
+                    public void onFailed(Exception e) {
+                        // If sign in fails, display a message to the user.
+                        Log.w("TAG", "createUserWithEmail:failure", e);
+                        Toast.makeText(Singup.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                        authenticationService.signOut();
+                    }
+                });
 
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                // If sign in fails, display a message to the user.
+                Log.w("TAG", "createUserWithEmail:failure", e);
+                Toast.makeText(Singup.this, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

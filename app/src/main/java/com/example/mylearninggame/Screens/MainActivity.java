@@ -18,7 +18,6 @@ import com.example.mylearninggame.R;
 import com.example.mylearninggame.Services.AuthenticationService;
 import com.example.mylearninggame.Services.DatabaseService;
 import com.example.mylearninggame.utils.SharedPreferencesUtil;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
     Button btnSignOut, btnLevels, btnAddQuestion;
-    boolean IsAdmin;
+    boolean isAdmin;
     User currentUser;
 
 
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return insets;
         });
         authenticationService = AuthenticationService.getInstance();
+        databaseService=DatabaseService.getInstance();
         initviews();
 
         if (!authenticationService.isUserSignedIn()) {
@@ -50,23 +50,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(landingIntent);
             finish();
         }
-
         databaseService.getUser(authenticationService.getCurrentUserUid(), new DatabaseService.DatabaseCallback<User>() {
                 @Override
                 public void onCompleted(User user) {
+                    if (user == null){
+                        // should not ever happened (only when clearing DB)
+                        authenticationService.signOut();
+                        return;
+                    }
                     SharedPreferencesUtil.saveUser(getApplicationContext(), user);
                     // update view
                 }
 
                 @Override
                 public void onFailed(Exception e) {
-
+                    Log.w(TAG, "getUser:failure", e);
+                    Toast.makeText(getApplicationContext(), "Could not get user",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         );
 
         currentUser = SharedPreferencesUtil.getUser(this);
+        Log.i(TAG, currentUser.toString());
         // update view
+        assert currentUser != null;
+        isAdmin =currentUser.getIsAdmin();
 
 
     }
@@ -95,9 +104,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(getApplicationContext(), Levels.class);
             startActivity(intent);
         }
-        if (view==btnAddQuestion && IsAdmin==false){
+        if (view==btnAddQuestion && !isAdmin){
             Toast.makeText(this, "You are not an admin", Toast.LENGTH_SHORT).show();
-        } else if (view==btnAddQuestion && IsAdmin==true) {
+        }
+        if (view==btnAddQuestion && isAdmin) {
             Intent intent = new Intent(getApplicationContext(), AddQuestion.class);
             startActivity(intent);
         }
