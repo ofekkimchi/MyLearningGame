@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assert currentUser != null;
         isAdmin =currentUser.getIsAdmin();
 
-
     }
 
     private void initviews() {

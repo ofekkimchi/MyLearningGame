@@ -2,12 +2,12 @@ package com.example.mylearninggame.Model;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Level {
     protected String id;
     protected ArrayList<Question> questions;
     protected int score;
 
-    public Game(String id, ArrayList<Question> questions, int score) {
+    public Level(String id, ArrayList<Question> questions, int score) {
         this.id = id;
         this.questions = questions;
         this.score = score;

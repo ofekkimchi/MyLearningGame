@@ -4,12 +4,10 @@ import java.util.List;
 
 public class Question {
     protected String id ;
-
-
     protected String word;
     protected String rightanswer;
     protected List<String> theoptions;
-    protected  int level;
+    protected int level;
 
 
 
