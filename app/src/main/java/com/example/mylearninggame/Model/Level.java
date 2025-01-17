@@ -6,6 +6,7 @@ public class Level {
     protected String id;
     protected ArrayList<Question> questions;
     protected int score;
+    protected String lang;
 
     public Level(String id, ArrayList<Question> questions, int score) {
         this.id = id;
