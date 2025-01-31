@@ -21,9 +21,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="416dp" />
+        android:hint="Enter right answer"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="223dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -33,22 +33,44 @@
         tools:layout_editor_absoluteX="160dp"
         tools:layout_editor_absoluteY="36dp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="304dp"
-        tools:layout_editor_absoluteY="356dp" />
-
     <EditText
         android:id="@+id/editTextText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="260dp" />
+        android:hint="Enter the word"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter wrong answer"
+        tools:layout_editor_absoluteX="99dp"
+        tools:layout_editor_absoluteY="305dp" />
+
+    <EditText
+        android:id="@+id/editTextText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter wrong answer"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="401dp" />
+
+    <EditText
+        android:id="@+id/editTextText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter wrong answer"
+        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="476dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,6 +59,7 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
         email=etEmail.getText().toString();
         pass=etPass.getText().toString();
 
+
         //check if registration is valid
         boolean isValid=true;
         if (fName.length()<2){
