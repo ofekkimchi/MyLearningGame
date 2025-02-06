@@ -6,7 +6,6 @@ public class Question {
     protected String id ;
     protected String word;
     protected String rightanswer;
-    protected List<String> theoptions;
     protected int level;
 
 
@@ -15,7 +14,6 @@ public class Question {
         this.id = id;
         this.word = word;
         this.rightanswer = rightanswer;
-        this.theoptions = theoptions;
         this.level = level;
     }
 
@@ -43,14 +41,6 @@ public class Question {
         this.rightanswer = rightanswer;
     }
 
-    public List<String> getTheoptions() {
-        return theoptions;
-    }
-
-    public void setTheoptions(List<String> theoptions) {
-        this.theoptions = theoptions;
-    }
-
     public int getLevel() {
         return level;
     }
@@ -65,7 +55,7 @@ public class Question {
                 "id='" + id + '\'' +
                 ", word='" + word + '\'' +
                 ", rightanswer='" + rightanswer + '\'' +
-                ", theoptions=" + theoptions +
+                ", theoptions=" +
                 ", level=" + level +
                 '}';
     }

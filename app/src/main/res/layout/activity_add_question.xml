@@ -8,15 +8,15 @@
     tools:context=".Screens.AddQuestion">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAddQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Add"
         tools:layout_editor_absoluteX="160dp"
         tools:layout_editor_absoluteY="604dp" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/etRightAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -29,12 +29,12 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Add Question"
         tools:layout_editor_absoluteX="160dp"
         tools:layout_editor_absoluteY="36dp" />
 
     <EditText
-        android:id="@+id/editTextText5"
+        android:id="@+id/etWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -44,7 +44,7 @@
         tools:layout_editor_absoluteY="128dp" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/etWrongAnswer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -54,7 +54,7 @@
         tools:layout_editor_absoluteY="305dp" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/etWrongAnswer2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -64,7 +64,7 @@
         tools:layout_editor_absoluteY="401dp" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/etWrongAnswer3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"

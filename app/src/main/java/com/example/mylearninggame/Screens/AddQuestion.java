@@ -1,6 +1,8 @@
 package com.example.mylearninggame.Screens;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mylearninggame.R;
 
 public class AddQuestion extends AppCompatActivity {
+
+    EditText etWord,etRightAnswer,etWrongAnswer1,etWrongAnswer2,etWrongAnswer3;
+    Button btnAddQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
