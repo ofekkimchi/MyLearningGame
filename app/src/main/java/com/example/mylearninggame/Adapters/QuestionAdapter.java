@@ -32,7 +32,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
         Question question = questionList.get(position);
         holder.tvWord.setText("שאלה: " + question.getWord());
-        holder.tvRightAnswer.setText("תשובה נכונה: " + question.getRightanswer());
+        holder.tvRightAnswer.setText("✅ תשובה נכונה: " + question.getRightAnswer());
+        holder.tvWrongAnswer1.setText("❌ " + question.getWrongAnswer1());
+        holder.tvWrongAnswer2.setText("❌ " + question.getWrongAnswer2());
+        holder.tvWrongAnswer3.setText("❌ " + question.getWrongAnswer3());
     }
 
     @Override
@@ -41,12 +44,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     }
 
     public static class QuestionViewHolder extends RecyclerView.ViewHolder {
-        TextView tvWord, tvRightAnswer;
+        TextView tvWord, tvRightAnswer, tvWrongAnswer1, tvWrongAnswer2, tvWrongAnswer3;
 
         public QuestionViewHolder(@NonNull View itemView) {
             super(itemView);
             tvWord = itemView.findViewById(R.id.tvWord);
             tvRightAnswer = itemView.findViewById(R.id.tvRightAnswer);
+            tvWrongAnswer1 = itemView.findViewById(R.id.tvWrongAnswer1);
+            tvWrongAnswer2 = itemView.findViewById(R.id.tvWrongAnswer2);
+            tvWrongAnswer3 = itemView.findViewById(R.id.tvWrongAnswer3);
         }
     }
 }

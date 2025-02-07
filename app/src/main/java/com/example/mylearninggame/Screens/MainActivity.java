@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "You are not an admin", Toast.LENGTH_SHORT).show();
         }
         if (view==btnAddQuestion && isAdmin) {
-            Intent intent = new Intent(getApplicationContext(), AddLevel.class);
+            Intent intent = new Intent(getApplicationContext(), AddQuestion.class);
             startActivity(intent);
         }
     }

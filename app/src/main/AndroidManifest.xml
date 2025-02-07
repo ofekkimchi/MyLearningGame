@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyLearningGame"
         tools:targetApi="31">
         <activity
+            android:name=".Screens.Level"
+            android:exported="false" />
+        <activity
             android:name=".Screens.Temporary"
             android:exported="false" />
         <activity

@@ -3,18 +3,32 @@ package com.example.mylearninggame.Model;
 import java.util.List;
 
 public class Question {
-    protected String id ;
     protected String word;
-    protected String rightanswer;
+    protected String rightAnswer;
+    protected String wrongAnswer1;
+    protected String wrongAnswer2;
+    protected String wrongAnswer3;
+
+    protected String id ;
     protected int level;
 
 
-
-    public Question(String id, String word, String rightanswer, List<String> theoptions, int level) {
-        this.id = id;
+    public Question(String word, String rightAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String id, int level) {
         this.word = word;
-        this.rightanswer = rightanswer;
+        this.rightAnswer = rightAnswer;
+        this.wrongAnswer1 = wrongAnswer1;
+        this.wrongAnswer2 = wrongAnswer2;
+        this.wrongAnswer3 = wrongAnswer3;
+        this.id = id;
         this.level = level;
+    }
+
+    public Question(String word, String rightAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3) {
+        this.word = word;
+        this.rightAnswer = rightAnswer;
+        this.wrongAnswer1 = wrongAnswer1;
+        this.wrongAnswer2 = wrongAnswer2;
+        this.wrongAnswer3 = wrongAnswer3;
     }
 
     public String getId() {
@@ -34,11 +48,43 @@ public class Question {
     }
 
     public String getRightanswer() {
-        return rightanswer;
+        return rightAnswer;
+    }
+
+    public String getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void setRightAnswer(String rightAnswer) {
+        this.rightAnswer = rightAnswer;
+    }
+
+    public String getWrongAnswer1() {
+        return wrongAnswer1;
+    }
+
+    public void setWrongAnswer1(String wrongAnswer1) {
+        this.wrongAnswer1 = wrongAnswer1;
+    }
+
+    public String getWrongAnswer2() {
+        return wrongAnswer2;
+    }
+
+    public void setWrongAnswer2(String wrongAnswer2) {
+        this.wrongAnswer2 = wrongAnswer2;
+    }
+
+    public String getWrongAnswer3() {
+        return wrongAnswer3;
+    }
+
+    public void setWrongAnswer3(String wrongAnswer3) {
+        this.wrongAnswer3 = wrongAnswer3;
     }
 
     public void setRightanswer(String rightanswer) {
-        this.rightanswer = rightanswer;
+        this.rightAnswer = rightanswer;
     }
 
     public int getLevel() {
@@ -54,8 +100,10 @@ public class Question {
         return "Question{" +
                 "id='" + id + '\'' +
                 ", word='" + word + '\'' +
-                ", rightanswer='" + rightanswer + '\'' +
-                ", theoptions=" +
+                ", rightAnswer='" + rightAnswer + '\'' +
+                ", wrongAnswer1='" + wrongAnswer1 + '\'' +
+                ", wrongAnswer2='" + wrongAnswer2 + '\'' +
+                ", wrongAnswer3='" + wrongAnswer3 + '\'' +
                 ", level=" + level +
                 '}';
     }
