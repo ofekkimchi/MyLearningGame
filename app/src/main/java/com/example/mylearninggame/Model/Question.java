@@ -1,8 +1,9 @@
 package com.example.mylearninggame.Model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Question {
+public class Question implements Serializable {
     protected String word;
     protected String rightAnswer;
     protected String wrongAnswer1;

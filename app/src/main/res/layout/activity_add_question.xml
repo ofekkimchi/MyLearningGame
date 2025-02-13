@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#90CBD3"
     tools:context=".Screens.AddQuestion">
 
     <Button
@@ -21,13 +22,13 @@
         android:id="@+id/etRightAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="1dp"
         android:ems="10"
         android:hint="Enter right answer"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/etWrongAnswer1"
-        app:layout_constraintStart_toStartOf="@+id/etWrongAnswer1" />
+        app:layout_constraintEnd_toEndOf="@+id/etWord"
+        app:layout_constraintTop_toBottomOf="@+id/etWord" />
 
     <TextView
         android:id="@+id/textView"
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Add Question"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,47 +45,45 @@
         android:id="@+id/etWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="148dp"
         android:ems="10"
         android:hint="Enter the word"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/etRightAnswer"
-        app:layout_constraintStart_toStartOf="@+id/etRightAnswer" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etWrongAnswer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="51dp"
+        android:layout_marginTop="58dp"
         android:ems="10"
         android:hint="Enter wrong answer"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/etWrongAnswer2"
-        app:layout_constraintEnd_toEndOf="@+id/etWrongAnswer2" />
+        app:layout_constraintStart_toStartOf="@+id/etRightAnswer"
+        app:layout_constraintTop_toBottomOf="@+id/etRightAnswer" />
 
     <EditText
         android:id="@+id/etWrongAnswer2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="62dp"
         android:ems="10"
         android:hint="Enter wrong answer"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/etWrongAnswer3"
-        app:layout_constraintEnd_toEndOf="@+id/etWrongAnswer3" />
+        app:layout_constraintStart_toStartOf="@+id/etWrongAnswer1"
+        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer1" />
 
     <EditText
         android:id="@+id/etWrongAnswer3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="83dp"
+        android:layout_marginTop="70dp"
         android:ems="10"
         android:hint="Enter wrong answer"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddQuestion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/etWrongAnswer2"
+        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

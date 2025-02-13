@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mylearninggame.R;
 
 public class Levels extends AppCompatActivity implements View.OnClickListener {
-    Button btnEnglish, btnHebrew;
+    Button btnEnglish, btnHebrew , level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,8 @@ public class Levels extends AppCompatActivity implements View.OnClickListener {
         btnEnglish.setOnClickListener(this);
         btnHebrew=findViewById(R.id.btnHebrewLevels);
         btnHebrew.setOnClickListener(this);
+        level=findViewById(R.id.btnLevel);
+        level.setOnClickListener(this);
     }
 
     @Override
@@ -46,5 +48,6 @@ public class Levels extends AppCompatActivity implements View.OnClickListener {
             Intent intent = new Intent(getApplicationContext(), HebrewLevels.class);
             startActivity(intent);
         }
+
     }
 }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mylearninggame.Adapters.QuestionAdapter;
 import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.R;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -26,15 +27,10 @@ public class Level extends AppCompatActivity {
     private Button btnAddNewQuestion;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_level);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
         recyclerView = findViewById(R.id.recyclerView);
         btnAddNewQuestion = findViewById(R.id.btnAddNewQuestion);
 
@@ -55,7 +51,7 @@ public class Level extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level.this, AddQuestion.class);
-                intent.putExtra("questions", questionsList); // שולחים את הרשימה המעודכנת
+                intent.putExtra("questions", questionsList);
                 startActivity(intent);
             }
         });
