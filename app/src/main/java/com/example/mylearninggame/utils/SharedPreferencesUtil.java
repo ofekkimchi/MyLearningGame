@@ -2,19 +2,21 @@ package com.example.mylearninggame.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.Model.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SharedPreferencesUtil {
-    /// The name of the shared preferences file
-    /// @see Context#getSharedPreferences(String, int)
     private static final String PREF_NAME = "com.example.testapp.PREFERENCE_FILE_KEY";
+    private static final String QUESTIONS_KEY = "questions_list";
 
-    /// Save a string to shared preferences
-    /// @param context The context to use
-    /// @param key The key to save the string with
-    /// @param value The string to save
-    /// @see SharedPreferences.Editor#putString(String, String)
+    /// שמירת מחרוזת ל-SharedPreferences
     private static void saveString(Context context, String key, String value) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -22,22 +24,13 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    /// Get a string from shared preferences
-    /// @param context The context to use
-    /// @param key The key to get the string with
-    /// @param defaultValue The default value to return if the key is not found
-    /// @return The string value stored in shared preferences
-    /// @see SharedPreferences#getString(String, String)
+    /// טעינת מחרוזת מ-SharedPreferences
     private static String getString(Context context, String key, String defaultValue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(key, defaultValue);
     }
 
-    /// Save an integer to shared preferences
-    /// @param context The context to use
-    /// @param key The key to save the integer with
-    /// @param value The integer to save
-    /// @see SharedPreferences.Editor#putInt(String, int)
+    /// שמירת מספר שלם ל-SharedPreferences
     private static void saveInt(Context context, String key, int value) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -45,22 +38,13 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    /// Get an integer from shared preferences
-    /// @param context The context to use
-    /// @param key The key to get the integer with
-    /// @param defaultValue The default value to return if the key is not found
-    /// @return The integer value stored in shared preferences
-    /// @see SharedPreferences#getInt(String, int)
+    /// טעינת מספר שלם מ-SharedPreferences
     private static int getInt(Context context, String key, int defaultValue) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(key, defaultValue);
     }
 
-    // Add more methods for other data types as needed
-
-    /// Clear all data from shared preferences
-    /// @param context The context to use
-    /// @see SharedPreferences.Editor#clear()
+    /// מחיקת נתונים מ-SharedPreferences
     public static void clear(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -68,10 +52,7 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    /// Remove a specific key from shared preferences
-    /// @param context The context to use
-    /// @param key The key to remove
-    /// @see SharedPreferences.Editor#remove(String)
+    /// הסרת מפתח ספציפי מ-SharedPreferences
     private static void remove(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -79,22 +60,13 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    /// Check if a key exists in shared preferences
-    /// @param context The context to use
-    /// @param key The key to check
-    /// @return true if the key exists, false otherwise
-    /// @see SharedPreferences#contains(String)
+    /// בדיקה אם מפתח מסוים קיים ב-SharedPreferences
     private static boolean contains(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.contains(key);
     }
 
-    // Add more utility methods as needed
-
-    /// Save a user object to shared preferences
-    /// @param context The context to use
-    /// @param user The user object to save
-    /// @see User
+    /// שמירת משתמש ל-SharedPreferences
     public static void saveUser(Context context, User user) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -104,18 +76,13 @@ public class SharedPreferencesUtil {
         editor.putString("fName", user.getFname());
         editor.putString("lName", user.getLname());
         editor.putString("phone", user.getPhone());
-        editor.putBoolean("isAdmin",user.getIsAdmin());
+        editor.putBoolean("isAdmin", user.getIsAdmin());
         editor.apply();
     }
 
-    /// Get the user object from shared preferences
-    /// @param context The context to use
-    /// @return The user object stored in shared preferences
-    /// @see User
-    /// @see #isUserLoggedIn(Context)
+    /// טעינת משתמש מ-SharedPreferences
     public static User getUser(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        // check if user is logged in
         if (!isUserLoggedIn(context)) {
             return null;
         }
@@ -125,12 +92,11 @@ public class SharedPreferencesUtil {
         String fName = sharedPreferences.getString("fName", "");
         String lName = sharedPreferences.getString("lName", "");
         String phone = sharedPreferences.getString("phone", "");
-        boolean isAdmin = sharedPreferences.getBoolean("isAdmin",false);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
         return new User(uid, email, password, fName, lName, phone, isAdmin);
     }
 
-    /// Sign out the user by removing user data from shared preferences
-    /// @param context The context to use
+    /// התנתקות משתמש על ידי הסרת הנתונים שלו
     public static void signOutUser(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -141,18 +107,39 @@ public class SharedPreferencesUtil {
         editor.remove("lName");
         editor.remove("phone");
         editor.remove("isAdmin");
-
-
         editor.apply();
     }
 
-    /// Check if a user is logged in by checking if the user id is present in shared preferences
-    /// @param context The context to use
-    /// @return true if the user is logged in, false otherwise
-    /// @see #contains(Context, String)
+    /// בדיקה אם משתמש מחובר
     public static boolean isUserLoggedIn(Context context) {
         return contains(context, "uid");
     }
 
+    // 🆕 שמירת רשימת השאלות
+    public static void saveQuestions(Context context, List<Question> questions) {
+        Gson gson = new Gson();
+        String json = gson.toJson(questions);
+        saveString(context, QUESTIONS_KEY, json);
+    }
 
+    // 🆕 טעינת רשימת השאלות
+    public static List<Question> loadQuestions(Context context) {
+        String json = getString(context, QUESTIONS_KEY, null);
+        if (json == null) {
+            return new ArrayList<>();
+        }
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Question>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+    public static void saveQuestions(Context context, ArrayList<Question> questions) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(questions);  // המרת הרשימה ל-JSON
+        editor.putString("questions_list", json);  // שימור ה-JSON ב-SharedPreferences
+        editor.apply();  // שמירה א-סינכרונית
+    }
 }

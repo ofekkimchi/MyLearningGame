@@ -1,7 +1,9 @@
 package com.example.mylearninggame.Screens;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.R;
+import com.example.mylearninggame.utils.SharedPreferencesUtil;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -59,13 +63,25 @@ public class AddQuestion extends AppCompatActivity {
         String wrong2 = etWrongAnswer2.getText().toString();
         String wrong3 = etWrongAnswer3.getText().toString();
 
-        // יצירת אובייקט שאלה חדש
         Question newQuestion = new Question(null, word, rightAnswer, wrong1, wrong2, wrong3, 0);
         questionsList.add(newQuestion);
 
-        // חזרה למסך השאלות עם הרשימה המעודכנת
+        // שמירת הרשימה ב-SharedPreferences דרך SharedPreferencesUtil
+        SharedPreferencesUtil.saveQuestions(AddQuestion.this, questionsList);
+
+        // מעבר למסך הבא (למשל Level)
         Intent intent = new Intent(AddQuestion.this, Level.class);
-        intent.putExtra("questions", questionsList); // העברת הרשימה
         startActivity(intent);
+    }
+
+    // פונקציה לשמירת הנתונים ב-SharedPreferences
+    private void saveQuestionsToPreferences() {
+        SharedPreferencesUtil prefs = (SharedPreferencesUtil) PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(questionsList);
+        editor.putString("questions_list", json);
+        editor.apply();
     }
 }

@@ -48,6 +48,10 @@ public class Levels extends AppCompatActivity implements View.OnClickListener {
             Intent intent = new Intent(getApplicationContext(), HebrewLevels.class);
             startActivity(intent);
         }
+        if (view == level) {
+            Intent intent = new Intent(getApplicationContext(), Level.class);
+            startActivity(intent);
+        }
 
     }
 }
