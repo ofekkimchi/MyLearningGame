@@ -1,7 +1,10 @@
 package com.example.mylearninggame.Screens;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,43 +20,57 @@ import com.example.mylearninggame.Adapters.QuestionAdapter;
 import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.R;
 import com.google.firebase.database.annotations.Nullable;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Level extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private QuestionAdapter questionAdapter;
+    private QuestionAdapter adapter;
     private ArrayList<Question> questionsList;
-    private Button btnAddNewQuestion;
+    private Button btnAddQuestion;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
 
         recyclerView = findViewById(R.id.recyclerView);
-        btnAddNewQuestion = findViewById(R.id.btnAddNewQuestion);
-
-        // קבלת רשימת השאלות שהגיעה מה-Intent
-        if (getIntent().hasExtra("questions")) {
-            questionsList = (ArrayList<Question>) getIntent().getSerializableExtra("questions");
-        } else {
-            questionsList = new ArrayList<>();
-        }
-
-        // הגדרת ה-RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        questionAdapter = new QuestionAdapter(questionsList);
-        recyclerView.setAdapter(questionAdapter);
+        btnAddQuestion = findViewById(R.id.btnAddNewQuestion);
+
+        // טעינת השאלות מ-SharedPreferences
+        loadQuestionsFromPreferences();
+
+        // הגדרת המתאם ל-RecyclerView
+        adapter = new QuestionAdapter(questionsList);
+        recyclerView.setAdapter(adapter);
 
         // כפתור להוספת שאלה חדשה
-        btnAddNewQuestion.setOnClickListener(new View.OnClickListener() {
+        btnAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level.this, AddQuestion.class);
-                intent.putExtra("questions", questionsList);
                 startActivity(intent);
             }
         });
+    }
+
+    private void loadQuestionsFromPreferences() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        String json = prefs.getString("questions_list", null);
+
+        Type type = new TypeToken<ArrayList<Question>>() {}.getType();
+        questionsList = gson.fromJson(json, type);
+
+        if (questionsList == null) {
+            questionsList = new ArrayList<>();
+        }
+
+        // הדפסת הלוג לבדיקה
+        Log.d("DEBUG", "Loaded Questions: " + json);
     }
 }

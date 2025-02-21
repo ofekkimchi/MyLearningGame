@@ -122,7 +122,7 @@ public class SharedPreferencesUtil {
         saveString(context, QUESTIONS_KEY, json);
     }
 
-    // 🆕 טעינת רשימת השאלות
+    //  טעינת רשימת השאלות
     public static List<Question> loadQuestions(Context context) {
         String json = getString(context, QUESTIONS_KEY, null);
         if (json == null) {
