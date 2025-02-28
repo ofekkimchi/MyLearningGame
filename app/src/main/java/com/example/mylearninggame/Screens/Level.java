@@ -1,5 +1,6 @@
 package com.example.mylearninggame.Screens;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 
 public class Level extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private QuestionAdapter adapter;
+    private QuestionAdapter questionAdapter;
     private ArrayList<Question> questionsList;
     private Button btnAddQuestion;
 
@@ -38,17 +39,15 @@ public class Level extends AppCompatActivity {
         setContentView(R.layout.activity_level);
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         btnAddQuestion = findViewById(R.id.btnAddNewQuestion);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // טעינת השאלות מ-SharedPreferences
+        // טעינת השאלות מה-SharedPreferences
         loadQuestionsFromPreferences();
 
-        // הגדרת המתאם ל-RecyclerView
-        adapter = new QuestionAdapter(questionsList);
-        recyclerView.setAdapter(adapter);
+        questionAdapter = new QuestionAdapter(this, questionsList);
+        recyclerView.setAdapter(questionAdapter);
 
-        // כפתור להוספת שאלה חדשה
         btnAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,20 +56,24 @@ public class Level extends AppCompatActivity {
             }
         });
     }
-
     private void loadQuestionsFromPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Gson gson = new Gson();
         String json = prefs.getString("questions_list", null);
-
         Type type = new TypeToken<ArrayList<Question>>() {}.getType();
         questionsList = gson.fromJson(json, type);
 
         if (questionsList == null) {
             questionsList = new ArrayList<>();
         }
+        Log.d("Level", "Loaded questions count: " + questionsList.size());
+    }
 
-        // הדפסת הלוג לבדיקה
-        Log.d("DEBUG", "Loaded Questions: " + json);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadQuestionsFromPreferences(); // טוען מחדש את הרשימה מ-SharedPreferences
+        questionAdapter.updateQuestionsList(questionsList); // מעדכן את הרשימה באדפטר
     }
 }
+

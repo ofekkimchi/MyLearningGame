@@ -10,14 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.R;
+import com.example.mylearninggame.Screens.Level;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
     private List<Question> questionList;
 
-    public QuestionAdapter(List<Question> questionList) {
+    public QuestionAdapter(Level level, List<Question> questionList) {
         this.questionList = questionList;
     }
 
@@ -54,5 +56,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             tvWrongAnswer2 = itemView.findViewById(R.id.tvWrongAnswer2);
             tvWrongAnswer3 = itemView.findViewById(R.id.tvWrongAnswer3);
         }
+    }
+    public void updateQuestionsList(ArrayList<Question> newQuestionsList) {
+        this.questionList.clear();
+        this.questionList.addAll(newQuestionsList);
+        notifyDataSetChanged(); // מעדכן את ה-RecyclerView
     }
 }
