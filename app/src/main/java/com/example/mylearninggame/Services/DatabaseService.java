@@ -2,11 +2,15 @@ package com.example.mylearninggame.Services;
 
 import android.util.Log;
 
+import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.database.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseService {
     /// tag for logging
@@ -60,7 +64,7 @@ public class DatabaseService {
     /// @return void
     /// @see DatabaseCallback
     private void writeData(@NotNull final String path, @NotNull final Object data, final @Nullable DatabaseCallback<Void> callback) {
-        databaseReference.child(path).setValue(data).addOnCompleteListener(task -> {
+        readData(path).setValue(data).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (callback == null) return;
                 callback.onCompleted(task.getResult());
@@ -77,6 +81,22 @@ public class DatabaseService {
 
     private DatabaseReference readData(@NotNull final String path) {
         return databaseReference.child(path);
+    }
+
+    /// remove data from the database at a specific path
+    /// @param path the path to remove the data from
+    /// @param callback the callback to call when the operation is completed
+    /// @see DatabaseCallback
+    private void deleteData(@NotNull final String path, @Nullable final DatabaseCallback<Void> callback) {
+        readData(path).removeValue((error, ref) -> {
+            if (error != null) {
+                if (callback == null) return;
+                callback.onFailed(error.toException());
+            } else {
+                if (callback == null) return;
+                callback.onCompleted(null);
+            }
+        });
     }
 
 
@@ -98,6 +118,28 @@ public class DatabaseService {
             callback.onCompleted(data);
         });
     }
+
+    /// get a list of data from the database at a specific path
+    /// @param path the path to get the data from
+    /// @param clazz the class of the objects to return
+    /// @param callback the callback to call when the operation is completed
+    private <T> void getDataList(@NotNull final String path, @NotNull final Class<T> clazz, @NotNull final DatabaseCallback<List<T>> callback) {
+        readData(path).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting data", task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<T> tList = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                T t = dataSnapshot.getValue(clazz);
+                tList.add(t);
+            });
+
+            callback.onCompleted(tList);
+        });
+    }
+
 
     /// generate a new id for a new object in the database
     /// @param path the path to generate the id for
@@ -134,6 +176,17 @@ public class DatabaseService {
     /// @see User
     public void getUser(@NotNull final String uid, @NotNull final DatabaseCallback<User> callback) {
         getData("users/" + uid, User.class, callback);
+    }
+    public void getQuestions(@NotNull final DatabaseCallback<List<Question>> callback) {
+        getDataList("questions", Question.class, callback);
+    }
+
+    public void createNewQuestion(@NotNull Question question, @NotNull final DatabaseCallback<Void> callback) {
+        writeData("questions/"+ question.getId(), question, callback);
+    }
+
+    public String generateNewQuestionId() {
+        return generateNewId("questions");
     }
 
 

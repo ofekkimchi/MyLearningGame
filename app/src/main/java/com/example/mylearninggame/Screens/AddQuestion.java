@@ -17,22 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mylearninggame.Adapters.QuestionAdapter;
 import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.R;
+import com.example.mylearninggame.Services.DatabaseService;
 import com.example.mylearninggame.utils.SharedPreferencesUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddQuestion extends AppCompatActivity {
     private EditText etWord, etRightAnswer, etWrongAnswer1, etWrongAnswer2, etWrongAnswer3;
     private Button btnSave;
-    private ArrayList<Question> questionsList;
+    DatabaseService databaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_question);
+
+        databaseService = DatabaseService.getInstance();
 
         // קישור ל-XML
         etWord = findViewById(R.id.etWord);
@@ -42,8 +46,6 @@ public class AddQuestion extends AppCompatActivity {
         etWrongAnswer3 = findViewById(R.id.etWrongAnswer3);
         btnSave = findViewById(R.id.btnAddQuestion);
 
-        // טעינת רשימת השאלות מ-SharedPreferences
-        loadQuestionsFromPreferences();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,37 +66,31 @@ public class AddQuestion extends AppCompatActivity {
             Toast.makeText(this, "אנא מלא את כל השדות", Toast.LENGTH_SHORT).show();
             return;
         }
+        /* if(word.contains())
+        {
+            Toast.makeText(this, "אי אפשר להוסיף מספרים למילה", Toast.LENGTH_SHORT).show();
+            return;
+        }*/
 
-        Question newQuestion = new Question(null, word, rightAnswer, wrong1, wrong2, wrong3, 0);
-        questionsList.add(newQuestion);
+        String id = databaseService.generateNewQuestionId();
+        Question newQuestion = new Question(id, word, rightAnswer, wrong1, wrong2, wrong3);
 
-        // שמירת הרשימה ב-SharedPreferences
-        saveQuestionsToPreferences();
+        databaseService.createNewQuestion(newQuestion, new DatabaseService.DatabaseCallback<Void>() {
+            @Override
+            public void onCompleted(Void object) {
+                Toast.makeText(AddQuestion.this, "השאלה נוספה בהצלחה!", Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, "השאלה נוספה בהצלחה!", Toast.LENGTH_SHORT).show();
+                // חזרה לרשימת השאלות
+                Intent intent = new Intent(AddQuestion.this, Level.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
 
-        // חזרה לרשימת השאלות
-        Intent intent = new Intent(AddQuestion.this, Level.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // לוודא שהמסך מתעדכן
-        startActivity(intent);
-        finish();
+            @Override
+            public void onFailed(Exception e) {
+
+            }
+        });
     }
-
-    private void loadQuestionsFromPreferences() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Gson gson = new Gson();
-        String json = prefs.getString("questions_list", null);
-        Type type = new TypeToken<ArrayList<Question>>() {}.getType();
-        questionsList = gson.fromJson(json, type);
-
-        if (questionsList == null) {
-            questionsList = new ArrayList<>();
-        }
-    }
-
-    private void saveQuestionsToPreferences() {
-        SharedPreferencesUtil.saveQuestions(this, questionsList);
-        Log.d("AddQuestion", "Saved questions count: " + questionsList.size());
-    }
-
 }

@@ -4,27 +4,19 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Question implements Serializable {
+
+    protected String id ;
     protected String word;
     protected String rightAnswer;
     protected String wrongAnswer1;
     protected String wrongAnswer2;
     protected String wrongAnswer3;
 
-    protected String id ;
-    protected int level;
-
-
-    public Question(String word, String rightAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, String id, int level) {
-        this.word = word;
-        this.rightAnswer = rightAnswer;
-        this.wrongAnswer1 = wrongAnswer1;
-        this.wrongAnswer2 = wrongAnswer2;
-        this.wrongAnswer3 = wrongAnswer3;
-        this.id = id;
-        this.level = level;
+    public Question() {
     }
 
-    public Question(String word, String rightAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3) {
+    public Question(String id, String word, String rightAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3) {
+        this.id = id;
         this.word = word;
         this.rightAnswer = rightAnswer;
         this.wrongAnswer1 = wrongAnswer1;
@@ -88,14 +80,6 @@ public class Question implements Serializable {
         this.rightAnswer = rightanswer;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     @Override
     public String toString() {
         return "Question{" +
@@ -105,7 +89,6 @@ public class Question implements Serializable {
                 ", wrongAnswer1='" + wrongAnswer1 + '\'' +
                 ", wrongAnswer2='" + wrongAnswer2 + '\'' +
                 ", wrongAnswer3='" + wrongAnswer3 + '\'' +
-                ", level=" + level +
                 '}';
     }
 }

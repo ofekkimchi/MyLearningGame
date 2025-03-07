@@ -19,13 +19,7 @@
             android:name=".Screens.Level"
             android:exported="false" />
         <activity
-            android:name=".Screens.Temporary"
-            android:exported="false" />
-        <activity
             android:name=".Screens.AddQuestion"
-            android:exported="false" />
-        <activity
-            android:name=".Screens.AddLevel"
             android:exported="false" />
         <activity
             android:name=".Screens.Landing"
