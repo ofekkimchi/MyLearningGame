@@ -40,10 +40,6 @@ public class Question implements Serializable {
         this.word = word;
     }
 
-    public String getRightanswer() {
-        return rightAnswer;
-    }
-
     public String getRightAnswer() {
         return rightAnswer;
     }
@@ -74,10 +70,6 @@ public class Question implements Serializable {
 
     public void setWrongAnswer3(String wrongAnswer3) {
         this.wrongAnswer3 = wrongAnswer3;
-    }
-
-    public void setRightanswer(String rightanswer) {
-        this.rightAnswer = rightanswer;
     }
 
     @Override

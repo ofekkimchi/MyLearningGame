@@ -16,18 +16,19 @@
         android:text="Add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer3" />
 
     <EditText
         android:id="@+id/etRightAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="54dp"
         android:ems="10"
         android:hint="Enter right answer"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/etWord"
+        app:layout_constraintBottom_toTopOf="@+id/etWrongAnswer1"
+        app:layout_constraintStart_toStartOf="@+id/etWord"
         app:layout_constraintTop_toBottomOf="@+id/etWord" />
 
     <TextView
@@ -35,8 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:layout_marginBottom="61dp"
         android:text="Add Question"
         android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,22 +48,24 @@
         android:id="@+id/etWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
+        android:layout_marginBottom="38dp"
         android:ems="10"
         android:hint="Enter the word"
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/etRightAnswer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <EditText
         android:id="@+id/etWrongAnswer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
+        android:layout_marginBottom="48dp"
         android:ems="10"
         android:hint="Enter wrong answer"
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/etWrongAnswer2"
         app:layout_constraintStart_toStartOf="@+id/etRightAnswer"
         app:layout_constraintTop_toBottomOf="@+id/etRightAnswer" />
 
@@ -68,10 +73,11 @@
         android:id="@+id/etWrongAnswer2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
+        android:layout_marginBottom="47dp"
         android:ems="10"
         android:hint="Enter wrong answer"
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/etWrongAnswer3"
         app:layout_constraintStart_toStartOf="@+id/etWrongAnswer1"
         app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer1" />
 
@@ -79,11 +85,41 @@
         android:id="@+id/etWrongAnswer3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginBottom="106dp"
         android:ems="10"
         android:hint="Enter wrong answer"
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddQuestion"
         app:layout_constraintStart_toStartOf="@+id/etWrongAnswer2"
         app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer2" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="148dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/etWord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <RadioButton
+            android:id="@+id/rbHebrew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="English level"
+            tools:layout_editor_absoluteX="149dp"
+            tools:layout_editor_absoluteY="172dp" />
+
+        <RadioButton
+            android:id="@+id/rbEnglish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hebrew level"
+            tools:layout_editor_absoluteX="149dp"
+            tools:layout_editor_absoluteY="124dp" />
+
+    </RadioGroup>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

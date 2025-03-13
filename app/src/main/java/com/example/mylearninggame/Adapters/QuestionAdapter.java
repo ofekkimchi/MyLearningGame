@@ -111,4 +111,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             tvWrongAnswer3 = itemView.findViewById(R.id.tvWrongAnswer3);
         }
     }
+    public void removeItem(int position) {
+        if (position < 0 || position >= questionList.size()) {
+            return;
+        }
+        questionList.remove(position);
+        notifyItemRemoved(position);
+
+    }
 }

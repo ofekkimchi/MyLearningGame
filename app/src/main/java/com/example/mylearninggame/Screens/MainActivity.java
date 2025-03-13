@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
-    Button btnSignOut, btnLevels, btnAddQuestion;
+    Button btnSignOut, btnLevels, btnAddQuestion, btnLevel;
     boolean isAdmin;
     User currentUser;
 
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent landingIntent = new Intent(MainActivity.this, Landing.class);
             startActivity(landingIntent);
             finish();
+            return;
         }
         databaseService.getUser(authenticationService.getCurrentUserUid(), new DatabaseService.DatabaseCallback<User>() {
                 @Override
@@ -86,12 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLevels.setOnClickListener(this);
         btnAddQuestion=findViewById(R.id.btnAddQuestion);
         btnAddQuestion.setOnClickListener(this);
+        btnLevel=findViewById(R.id.btnLevel);
+        btnLevel.setOnClickListener(this);
 
     }
-
-
-
-
     @Override
     public void onClick(View view) {
         if (view == btnSignOut) {
@@ -108,6 +107,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (view==btnAddQuestion && isAdmin) {
             Intent intent = new Intent(getApplicationContext(), AddQuestion.class);
+            startActivity(intent);
+        }
+        if (view == btnLevel) {
+            Intent intent = new Intent(getApplicationContext(), Level.class);
             startActivity(intent);
         }
     }
