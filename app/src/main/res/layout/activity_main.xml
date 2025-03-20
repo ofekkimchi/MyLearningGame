@@ -64,8 +64,12 @@
         android:id="@+id/btnLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#BE171A50"
+        android:textSize="18dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="47dp"
         android:text="level"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="652dp" />
+        app:layout_constraintStart_toStartOf="@+id/btnAddQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddQuestion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

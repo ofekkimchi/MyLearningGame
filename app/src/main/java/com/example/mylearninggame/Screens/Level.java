@@ -97,9 +97,9 @@ public class Level extends AppCompatActivity {
         super.onResume();
         loadQuestions(); // טוען מחדש את הרשימה מ-SharedPreferences
     }
-
     public void enableSwipeToDelete(RecyclerView recyclerView, QuestionAdapter adapter) {
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            // TODO replace icon
             private final Drawable deleteIcon = ContextCompat.getDrawable(recyclerView.getContext(), R.drawable.delete_icon);
             private final ColorDrawable background = new ColorDrawable(Color.RED);
 
@@ -140,8 +140,12 @@ public class Level extends AppCompatActivity {
                 }
             }
         };
-
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
     }
+
+
+
+
+
 }
 
