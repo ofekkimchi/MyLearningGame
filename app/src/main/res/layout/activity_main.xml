@@ -64,11 +64,11 @@
         android:id="@+id/btnLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="44dp"
         android:backgroundTint="#BE171A50"
-        android:textSize="18dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="47dp"
         android:text="level"
+        android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/btnAddQuestion"
         app:layout_constraintTop_toBottomOf="@+id/btnAddQuestion" />
 

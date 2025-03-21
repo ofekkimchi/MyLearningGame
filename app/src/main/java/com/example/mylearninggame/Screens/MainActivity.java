@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // update view
         assert currentUser != null;
         isAdmin =currentUser.getIsAdmin();
+        if(!isAdmin){
+            btnAddQuestion.setVisibility(View.GONE);
+            btnLevel.setVisibility(View.GONE);
+        }
 
     }
 

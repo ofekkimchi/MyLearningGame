@@ -1,5 +1,7 @@
 package com.example.mylearninggame.Model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class Question implements Serializable {
         this.wrongAnswer3 = wrongAnswer3;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }

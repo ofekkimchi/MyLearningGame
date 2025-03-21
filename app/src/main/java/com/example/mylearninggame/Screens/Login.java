@@ -22,6 +22,7 @@ import com.example.mylearninggame.R;
 import com.example.mylearninggame.Services.AuthenticationService;
 import com.example.mylearninggame.Services.DatabaseService;
 import com.example.mylearninggame.utils.SharedPreferencesUtil;
+import com.example.mylearninggame.utils.Validator;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     Button btnlog, btnBack;
@@ -110,7 +111,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
     private boolean isValid(String email, String pass) {
-        if (!email.contains("@")){
+        if (!Validator.isEmailValid(email)){
             Toast.makeText(getApplicationContext(),"כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
             return false;
         }

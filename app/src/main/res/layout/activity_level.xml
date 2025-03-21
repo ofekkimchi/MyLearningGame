@@ -13,6 +13,7 @@
         android:padding="16dp">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:onClick="onClick"
             android:id="@+id/recyclerView"
             android:layout_width="372dp"
             android:layout_height="633dp"

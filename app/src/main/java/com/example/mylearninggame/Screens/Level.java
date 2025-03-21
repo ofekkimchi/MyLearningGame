@@ -26,8 +26,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylearninggame.Adapters.QuestionAdapter;
 import com.example.mylearninggame.Model.Question;
+import com.example.mylearninggame.Model.User;
 import com.example.mylearninggame.R;
 import com.example.mylearninggame.Services.DatabaseService;
+import com.example.mylearninggame.utils.SharedPreferencesUtil;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,6 +42,8 @@ public class Level extends AppCompatActivity {
     private RecyclerView recyclerView;
     private QuestionAdapter questionAdapter;
     private Button btnAddQuestion;
+    User currentUser;
+
 
     DatabaseService databaseService;
 
@@ -47,6 +51,8 @@ public class Level extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
+
+        currentUser = SharedPreferencesUtil.getUser(this);
 
         databaseService = DatabaseService.getInstance();
 
@@ -59,7 +65,9 @@ public class Level extends AppCompatActivity {
         questionAdapter = new QuestionAdapter(new QuestionAdapter.QuestionClickListener() {
             @Override
             public void onQuestionClick(Question question) {
-
+                Intent intent = new Intent(Level.this, AddQuestion.class);
+                intent.putExtra("question", question);
+                startActivity(intent);
             }
 
             @Override
@@ -68,7 +76,10 @@ public class Level extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(questionAdapter);
-        enableSwipeToDelete(recyclerView, questionAdapter);
+        if (currentUser.getIsAdmin()){
+            enableSwipeToDelete(recyclerView, questionAdapter);
+        }
+
 
         btnAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +108,8 @@ public class Level extends AppCompatActivity {
         super.onResume();
         loadQuestions(); // טוען מחדש את הרשימה מ-SharedPreferences
     }
+
+
     public void enableSwipeToDelete(RecyclerView recyclerView, QuestionAdapter adapter) {
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             // TODO replace icon
@@ -142,10 +155,6 @@ public class Level extends AppCompatActivity {
         };
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
     }
-
-
-
-
 
 }
 
