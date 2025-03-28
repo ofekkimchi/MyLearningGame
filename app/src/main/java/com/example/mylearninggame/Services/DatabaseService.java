@@ -189,5 +189,9 @@ public class DatabaseService {
         return generateNewId("questions");
     }
 
+    public void deleteQuestion(@NotNull final String questionId, @NotNull final DatabaseCallback<Void> callback) {
+        deleteData("questions/"+ questionId, callback);
+    }
+
 
 }

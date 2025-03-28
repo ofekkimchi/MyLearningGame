@@ -98,6 +98,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         notifyItemRemoved(index);
     }
 
+    public Question getByPosition(int pos) {
+        if (pos < 0 || getItemCount() <= pos) return null;
+        return questionList.get(pos);
+    }
+
 
     public static class QuestionViewHolder extends RecyclerView.ViewHolder {
         TextView tvWord, tvRightAnswer, tvWrongAnswer1, tvWrongAnswer2, tvWrongAnswer3;
@@ -111,6 +116,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             tvWrongAnswer3 = itemView.findViewById(R.id.tvWrongAnswer3);
         }
     }
+
     public void removeItem(int position) {
         if (position < 0 || position >= questionList.size()) {
             return;
