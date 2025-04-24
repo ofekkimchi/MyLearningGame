@@ -78,6 +78,13 @@ public class AddQuestion extends AppCompatActivity {
             Toast.makeText(this, "אנא מלא את כל השדות", Toast.LENGTH_SHORT).show();
             return;
         }
+        String regex = "^[a-zA-Zא-ת\\s]+$";
+        if (!word.matches(regex) || !rightAnswer.matches(regex) || !wrong1.matches(regex)
+                || !wrong2.matches(regex) || !wrong3.matches(regex)) {
+            Toast.makeText(this, "מותר להשתמש רק באותיות. אין מספרים או תווים מיוחדים.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         String id;
         if (this.question == null)
