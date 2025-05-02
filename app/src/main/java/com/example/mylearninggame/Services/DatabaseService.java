@@ -177,6 +177,11 @@ public class DatabaseService {
     public void getUser(@NotNull final String uid, @NotNull final DatabaseCallback<User> callback) {
         getData("users/" + uid, User.class, callback);
     }
+
+    public void getUsers(@NotNull final DatabaseCallback<List<User>> callback) {
+        getDataList("users", User.class, callback);
+    }
+
     public void getQuestions(@NotNull final DatabaseCallback<List<Question>> callback) {
         getDataList("questions", Question.class, callback);
     }
