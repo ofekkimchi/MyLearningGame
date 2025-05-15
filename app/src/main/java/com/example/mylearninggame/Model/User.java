@@ -1,6 +1,8 @@
 package com.example.mylearninggame.Model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     String id;
     String fname, lname, phone, email, password;
     boolean isAdmin;

@@ -1,5 +1,6 @@
 package com.example.mylearninggame.Screens;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -42,6 +43,9 @@ public class UserTable extends AppCompatActivity {
         this.userAdapter = new UserAdapter(this, new UserAdapter.OnUserClick() {
             @Override
             public void onClick(User user) {
+                Intent intent = new Intent(UserTable.this, EditUser.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
 
             }
         });
