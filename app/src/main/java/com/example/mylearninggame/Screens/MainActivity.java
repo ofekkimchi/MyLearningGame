@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
-    Button btnSignOut, btnLevels, btnAddQuestion, btnLevel,button;
+    Button btnSignOut, btnLevels, btnAddQuestion, btnLevel,btnAdmin;
     boolean isAdmin;
     User currentUser;
 
@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAddQuestion.setOnClickListener(this);
         btnLevel=findViewById(R.id.btnLevel);
         btnLevel.setOnClickListener(this);
-        button=findViewById(R.id.button);
-        button.setOnClickListener(this);
+        btnAdmin=findViewById(R.id.btnAdmin);
+        btnAdmin.setOnClickListener(this);
 
     }
     @Override
@@ -115,13 +115,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(getApplicationContext(), AddQuestion.class);
             startActivity(intent);
         }
+        if (view==btnAdmin && !isAdmin){
+            Toast.makeText(this, "You are not an admin", Toast.LENGTH_SHORT).show();
+        }
+        if (view==btnAdmin && isAdmin) {
+            Intent intent = new Intent(getApplicationContext(), AdminPage.class);
+            startActivity(intent);
+        }
         if (view == btnLevel) {
             Intent intent = new Intent(getApplicationContext(), Level.class);
             startActivity(intent);
         }
-        if (view == button) {
-            Intent intent = new Intent(getApplicationContext(), UserTable.class);
-            startActivity(intent);
-        }
+
     }
 }
