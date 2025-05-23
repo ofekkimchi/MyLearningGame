@@ -1,6 +1,7 @@
 package com.example.mylearninggame.Screens;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.example.mylearninggame.utils.SharedPreferencesUtil;
 public class EditUser extends AppCompatActivity {
 
     User user;
+    EditText editEmail, editFName, editLName,editPhone, editPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,5 +32,15 @@ public class EditUser extends AppCompatActivity {
         if (user == null) {
             user = SharedPreferencesUtil.getUser(this);
         }
+        initviews();
     }
+
+    private void initviews() {
+        editEmail=findViewById(R.id.editEmail);
+        editFName=findViewById(R.id.editFName);
+        editLName=findViewById(R.id.editLName);
+        editPass=findViewById(R.id.editPass);
+        editPhone=findViewById(R.id.editPhone);
+    }
+
 }
