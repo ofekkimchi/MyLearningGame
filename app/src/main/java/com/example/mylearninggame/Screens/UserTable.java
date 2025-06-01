@@ -44,13 +44,28 @@ public class UserTable extends AppCompatActivity {
             @Override
             public void onClick(User user) {
                 Intent intent = new Intent(UserTable.this, EditUser.class);
-                intent.putExtra("user", user);
+                intent.putExtra("userId", user.getId());
+                intent.putExtra("userEmail", user.getEmail());
+                intent.putExtra("userFName", user.getFname());
+                intent.putExtra("userLName", user.getLname());
+                intent.putExtra("userPhone", user.getPhone());
+                intent.putExtra("userPassword", user.getPassword());
+                intent.putExtra("userIsAdmin", user.getIsAdmin());
                 startActivity(intent);
-
             }
         });
         rv.setAdapter(userAdapter);
 
+        loadUsers();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUsers();
+    }
+
+    private void loadUsers() {
         databaseService.getUsers(new DatabaseService.DatabaseCallback<List<User>>() {
             @Override
             public void onCompleted(List<User> userList) {
@@ -59,7 +74,7 @@ public class UserTable extends AppCompatActivity {
 
             @Override
             public void onFailed(Exception e) {
-
+                // Handle error if needed
             }
         });
     }
