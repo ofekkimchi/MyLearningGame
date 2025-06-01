@@ -40,14 +40,6 @@ public class Levels extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == btnEnglish) {
-            Intent intent = new Intent(getApplicationContext(), EnglishLevels.class);
-            startActivity(intent);
-        }
-        if (view == btnHebrew) {
-            Intent intent = new Intent(getApplicationContext(), HebrewLevels.class);
-            startActivity(intent);
-        }
         if (view == level) {
             Intent intent = new Intent(getApplicationContext(), Level.class);
             startActivity(intent);

@@ -36,12 +36,7 @@
         <activity
             android:name=".Screens.Landing"
             android:exported="false" />
-        <activity
-            android:name=".Screens.EnglishLevels"
-            android:exported="false" />
-        <activity
-            android:name=".Screens.HebrewLevels"
-            android:exported="false" />
+
         <activity
             android:name=".Screens.Levels"
             android:exported="false" />
