@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     private AuthenticationService authenticationService;
     private DatabaseService databaseService;
-    Button btnSignOut, btnLevels, btnAddQuestion, btnLevel,btnAdmin;
+    Button btnSignOut, btnLevels, btnAddQuestion, btnAdmin;
     boolean isAdmin;
     User currentUser;
 
@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         isAdmin =currentUser.getIsAdmin();
         if(!isAdmin){
             btnAddQuestion.setVisibility(View.GONE);
-            btnLevel.setVisibility(View.GONE);
         }
 
     }
@@ -91,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnLevels.setOnClickListener(this);
         btnAddQuestion=findViewById(R.id.btnAddQuestion);
         btnAddQuestion.setOnClickListener(this);
-        btnLevel=findViewById(R.id.btnLevel);
-        btnLevel.setOnClickListener(this);
         btnAdmin=findViewById(R.id.btnAdmin);
         btnAdmin.setOnClickListener(this);
 
@@ -120,10 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (view==btnAdmin && isAdmin) {
             Intent intent = new Intent(getApplicationContext(), AdminPage.class);
-            startActivity(intent);
-        }
-        if (view == btnLevel) {
-            Intent intent = new Intent(getApplicationContext(), Level.class);
             startActivity(intent);
         }
 

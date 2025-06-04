@@ -13,17 +13,19 @@ public class Question implements Serializable {
     protected String wrongAnswer1;
     protected String wrongAnswer2;
     protected String wrongAnswer3;
+    private int level;
 
     public Question() {
     }
 
-    public Question(String id, String word, String rightAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3) {
+    public Question(String id, String word, String rightAnswer, String wrongAnswer1, String wrongAnswer2, String wrongAnswer3, int level) {
         this.id = id;
         this.word = word;
         this.rightAnswer = rightAnswer;
         this.wrongAnswer1 = wrongAnswer1;
         this.wrongAnswer2 = wrongAnswer2;
         this.wrongAnswer3 = wrongAnswer3;
+        this.level = level;
     }
 
     @NonNull
@@ -73,6 +75,14 @@ public class Question implements Serializable {
 
     public void setWrongAnswer3(String wrongAnswer3) {
         this.wrongAnswer3 = wrongAnswer3;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override

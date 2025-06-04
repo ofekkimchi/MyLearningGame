@@ -5,85 +5,123 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90CBD3"
+    android:background="@drawable/gradient_background"
+    android:padding="16dp"
     tools:context=".Screens.AddQuestion">
-
-    <Button
-        android:id="@+id/btnAddQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="82dp"
-        android:text="Add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer1" />
-
-    <EditText
-        android:id="@+id/etRightAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="66dp"
-        android:ems="10"
-        android:hint="Enter right answer"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/etWord"
-        app:layout_constraintTop_toBottomOf="@+id/etWord" />
 
     <TextView
         android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:text="Add Question"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSelectLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Level:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tv1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <RadioGroup
+        android:id="@+id/levelRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvSelectLevel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
+
+        <RadioButton
+            android:id="@+id/radioLevel1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 1"/>
+
+        <RadioButton
+            android:id="@+id/radioLevel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 2"/>
+
+        <RadioButton
+            android:id="@+id/radioLevel3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level 3"/>
+
+    </RadioGroup>
 
     <EditText
         android:id="@+id/etWord"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
-        android:ems="10"
-        android:hint="Enter the word"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="24dp"
+        android:hint="Enter Word"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/levelRadioGroup" />
+
+    <EditText
+        android:id="@+id/etRightAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Right Answer"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/etWord" />
 
     <EditText
         android:id="@+id/etWrongAnswer1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
-        android:ems="10"
-        android:hint="Enter wrong answer"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/etWrongAnswer2"
-        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer2" />
+        android:layout_marginTop="16dp"
+        android:hint="Wrong Answer 1"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/etRightAnswer" />
 
     <EditText
         android:id="@+id/etWrongAnswer2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
-        android:ems="10"
-        android:hint="Enter wrong answer"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/etWrongAnswer3"
-        app:layout_constraintTop_toBottomOf="@+id/etWrongAnswer3" />
+        android:layout_marginTop="16dp"
+        android:hint="Wrong Answer 2"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/etWrongAnswer1" />
 
     <EditText
         android:id="@+id/etWrongAnswer3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
-        android:ems="10"
-        android:hint="Enter wrong answer"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/etRightAnswer"
-        app:layout_constraintTop_toBottomOf="@+id/etRightAnswer" />
+        android:layout_marginTop="16dp"
+        android:hint="Wrong Answer 3"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/etWrongAnswer2" />
 
+    <Button
+        android:id="@+id/btnAddQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Save Question"
+        android:backgroundTint="#4A90E2"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/etWrongAnswer3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

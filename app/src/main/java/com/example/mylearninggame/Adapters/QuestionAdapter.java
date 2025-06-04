@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.R;
-import com.example.mylearninggame.Screens.Level;
 
 import java.util.ArrayList;
 import java.util.List;

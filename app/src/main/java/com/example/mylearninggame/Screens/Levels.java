@@ -38,12 +38,9 @@ public class Levels extends AppCompatActivity implements View.OnClickListener {
         level.setOnClickListener(this);
     }
 
+
     @Override
     public void onClick(View view) {
-        if (view == level) {
-            Intent intent = new Intent(getApplicationContext(), Level.class);
-            startActivity(intent);
-        }
 
     }
 }
