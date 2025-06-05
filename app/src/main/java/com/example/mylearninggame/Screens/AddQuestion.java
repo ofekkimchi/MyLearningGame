@@ -110,7 +110,6 @@ public class AddQuestion extends AppCompatActivity {
 
         String id;
         if (this.question == null) {
-            // Assuming DatabaseService has a method to generate a new ID
             id = databaseService.generateNewQuestionId();
         } else {
             id = this.question.getId();
@@ -118,14 +117,24 @@ public class AddQuestion extends AppCompatActivity {
 
         Question newQuestion = new Question(id, word, rightAnswer, wrong1, wrong2, wrong3, selectedLevel);
 
+        int finalSelectedLevel = selectedLevel;
         databaseService.createNewQuestion(newQuestion, new DatabaseService.DatabaseCallback<Void>() {
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(AddQuestion.this, "השאלה נוספה בהצלחה!", Toast.LENGTH_SHORT).show();
 
-                // חזרה לרשימת השאלות
-                Intent intent = new Intent(AddQuestion.this, Level1Admin.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                // Redirect to the appropriate admin page based on the selected level
+                Intent intent;
+                if (finalSelectedLevel == 1) {
+                    intent = new Intent(AddQuestion.this, Level1Admin.class);
+                } else if (finalSelectedLevel == 2) {
+                    intent = new Intent(AddQuestion.this, Level2Admin.class);
+                } else if (finalSelectedLevel == 3) {
+                    intent = new Intent(AddQuestion.this, Level3Admin.class);
+                } else {
+                    intent = new Intent(AddQuestion.this, Level1Admin.class);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
             }
