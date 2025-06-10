@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="profile_picture_size">100dp</dimen>
+    <dimen name="profile_picture_margin">8dp</dimen>
+    <dimen name="profile_icon_size_levels">56dp</dimen>
+    <dimen name="coin_text_size_levels">22sp</dimen>
+</resources> 
