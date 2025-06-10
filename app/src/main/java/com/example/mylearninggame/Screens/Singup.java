@@ -22,7 +22,7 @@ import com.example.mylearninggame.Services.DatabaseService;
 import com.example.mylearninggame.utils.SharedPreferencesUtil;
 
 public class Singup extends AppCompatActivity implements View.OnClickListener {
-    EditText etFName, etLName, etPhone, etEmail, etPass;
+    EditText etFName, etLName, etPhone, etEmail, etPassword;
     Button btnReg;
 
     String fName,lName, phone, email, pass;
@@ -48,7 +48,7 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
         etLName=findViewById(R.id.etLname);
         etPhone=findViewById(R.id.etPhone);
         etEmail=findViewById(R.id.etEmail);
-        etPass=findViewById(R.id.etPassword);
+        etPassword=findViewById(R.id.etPassword);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
         lName=etLName.getText().toString();
         phone=etPhone.getText().toString();
         email=etEmail.getText().toString();
-        pass=etPass.getText().toString();
+        pass=etPassword.getText().toString();
 
 
         //check if registration is valid
@@ -93,7 +93,7 @@ public class Singup extends AppCompatActivity implements View.OnClickListener {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d("TAG", "createUserWithEmail:success");
 
-                User newUser=new User(uid, fName, lName, phone, email,pass, false);
+                User newUser=new User(uid, fName, lName, phone, email, pass, false, 0, R.drawable.default_profile);
                 databaseService.createNewUser(newUser, new DatabaseService.DatabaseCallback<Void>() {
                     @Override
                     public void onCompleted(Void object) {

@@ -5,29 +5,31 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90CBD3"
+    android:background="@drawable/gradient_background"
     tools:context=".Screens.Landing">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogInLanding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="47dp"
         android:text="Log In"
-        android:textSize="20dp"
-        android:backgroundTint="#BE171A50"
+        android:textSize="20sp"
+        android:padding="12dp"
+        app:cornerRadius="12dp"
         app:layout_constraintStart_toStartOf="@+id/btnSignUpLanding"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUpLanding" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignUpLanding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="Sign Up"
-        android:textSize="20dp"
-        android:backgroundTint="#BE171A50"
+        android:textSize="20sp"
+        android:padding="12dp"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />

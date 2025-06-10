@@ -5,16 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90CBD3"
+    android:background="@drawable/gradient_background"
     tools:context=".Screens.AdminPage">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnUT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="372dp"
+        android:layout_marginTop="232dp"
         android:text="User table"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        android:padding="12dp"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,10 +25,47 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="68dp"
         android:text="Admin Page"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnUT"
+        app:layout_constraintEnd_toEndOf="@+id/btnUT" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAdminL1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:text="Level 1"
+        android:textSize="20sp"
+        android:padding="12dp"
+        app:cornerRadius="12dp"
+        app:layout_constraintStart_toStartOf="@+id/btnUT"
+        app:layout_constraintTop_toBottomOf="@+id/btnUT" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAdminL2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Level 2"
+        android:textSize="20sp"
+        android:padding="12dp"
+        app:cornerRadius="12dp"
+        app:layout_constraintStart_toStartOf="@+id/btnAdminL1"
+        app:layout_constraintTop_toBottomOf="@+id/btnAdminL1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAdminL3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Level 3"
+        android:textSize="20sp"
+        android:padding="12dp"
+        app:cornerRadius="12dp"
+        app:layout_constraintStart_toStartOf="@+id/btnAdminL2"
+        app:layout_constraintTop_toBottomOf="@+id/btnAdminL2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

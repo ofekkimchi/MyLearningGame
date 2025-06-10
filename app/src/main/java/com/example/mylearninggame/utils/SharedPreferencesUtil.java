@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import com.example.mylearninggame.Model.Question;
 import com.example.mylearninggame.Model.User;
+import com.example.mylearninggame.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -77,6 +78,14 @@ public class SharedPreferencesUtil {
         editor.putString("lName", user.getLname());
         editor.putString("phone", user.getPhone());
         editor.putBoolean("isAdmin", user.getIsAdmin());
+        editor.putInt("coins", user.getCoins());
+        editor.putInt("profilePictureId", user.getProfilePictureId());
+        
+        // Save purchased profile pictures
+        Gson gson = new Gson();
+        String purchasedPicturesJson = gson.toJson(user.getPurchasedProfilePictures());
+        editor.putString("purchasedProfilePictures", purchasedPicturesJson);
+        
         editor.apply();
     }
 
@@ -93,7 +102,21 @@ public class SharedPreferencesUtil {
         String lName = sharedPreferences.getString("lName", "");
         String phone = sharedPreferences.getString("phone", "");
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
-        return new User(uid, email, password, fName, lName, phone, isAdmin);
+        int coins = sharedPreferences.getInt("coins", 0);
+        int profilePictureId = sharedPreferences.getInt("profilePictureId", R.drawable.default_profile);
+        
+        User user = new User(uid, fName, lName, phone, email, password, isAdmin, coins, profilePictureId);
+        
+        // Load purchased profile pictures
+        String purchasedPicturesJson = sharedPreferences.getString("purchasedProfilePictures", "[]");
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Integer>>(){}.getType();
+        List<Integer> purchasedPictures = gson.fromJson(purchasedPicturesJson, listType);
+        for (Integer pictureId : purchasedPictures) {
+            user.addPurchasedProfilePicture(pictureId);
+        }
+        
+        return user;
     }
 
     /// התנתקות משתמש על ידי הסרת הנתונים שלו

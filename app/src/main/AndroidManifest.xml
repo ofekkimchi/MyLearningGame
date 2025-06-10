@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyLearningGame"
         tools:targetApi="31">
         <activity
+            android:name=".Screens.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Screens.LevelScreen"
             android:exported="false" />
         <activity
@@ -56,6 +59,18 @@
             android:exported="false" />
         <activity
             android:name=".Screens.Level3Admin"
+            android:exported="false" />
+        <activity
+            android:name=".Screens.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Screens.Level1"
+            android:exported="false" />
+        <activity
+            android:name=".Screens.Level2"
+            android:exported="false" />
+        <activity
+            android:name=".Screens.Level3"
             android:exported="false" />
         <activity
             android:name=".Screens.MainActivity"

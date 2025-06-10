@@ -18,12 +18,20 @@ import com.example.mylearninggame.Services.DatabaseService;
 
 import java.util.List;
 
+/**
+ * Admin screen that displays a table of all users in the system
+ * Allows administrators to view and edit user information
+ */
 public class UserTable extends AppCompatActivity {
-    RecyclerView rv;
-    DatabaseService databaseService;
+    // UI Components
+    private RecyclerView rv;
+    // Services and adapters
+    private DatabaseService databaseService;
+    private UserAdapter userAdapter;
 
-    UserAdapter userAdapter;
-
+    /**
+     * Initializes the activity and sets up the UI components
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +43,12 @@ public class UserTable extends AppCompatActivity {
             return insets;
         });
 
-        databaseService= DatabaseService.getInstance();
+        databaseService = DatabaseService.getInstance();
 
         rv = findViewById(R.id.rv_users_all);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
+        // Initialize user adapter with click listener for editing users
         this.userAdapter = new UserAdapter(this, new UserAdapter.OnUserClick() {
             @Override
             public void onClick(User user) {
@@ -59,12 +68,18 @@ public class UserTable extends AppCompatActivity {
         loadUsers();
     }
 
+    /**
+     * Reloads the user list when the activity resumes
+     */
     @Override
     protected void onResume() {
         super.onResume();
         loadUsers();
     }
 
+    /**
+     * Loads all users from the database and updates the RecyclerView
+     */
     private void loadUsers() {
         databaseService.getUsers(new DatabaseService.DatabaseCallback<List<User>>() {
             @Override

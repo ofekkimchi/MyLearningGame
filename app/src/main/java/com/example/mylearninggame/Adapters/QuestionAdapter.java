@@ -15,9 +15,16 @@ import com.example.mylearninggame.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * אדפטר להצגת שאלות ברשימה
+ * מטפל בהצגה ובאינטראקציה עם שאלות בממשק המנהל
+ */
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
-
+    /**
+     * ממשק לטיפול באירועי לחיצה על שאלות
+     * מספק קריאות חזרה ללחיצות רגילות וארוכות על שאלות
+     */
     public interface QuestionClickListener {
         void onQuestionClick(Question question);
         void onLongQuestionClick(Question question);
@@ -26,11 +33,21 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     private List<Question> questionList;
     private QuestionClickListener questionClickListener;
 
+    /**
+     * בנאי לאדפטר השאלות
+     * @param questionClickListener מאזין לטיפול באירועי לחיצה על שאלות
+     */
     public QuestionAdapter(@Nullable QuestionClickListener questionClickListener) {
         this.questionList = new ArrayList<>();
         this.questionClickListener = questionClickListener;
     }
 
+    /**
+     * יוצר מחזיק תצוגה חדש עבור פריט שאלה
+     * @param parent קבוצת התצוגה האב
+     * @param viewType סוג התצוגה ליצירה
+     * @return מופע חדש של QuestionViewHolder
+     */
     @NonNull
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,6 +55,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         return new QuestionViewHolder(view);
     }
 
+    /**
+     * מקשר נתוני שאלה למחזיק התצוגה
+     * מגדיר את הצגת השאלה ומאזיני לחיצה
+     * @param holder מחזיק התצוגה לקישור נתונים
+     * @param position מיקום השאלה ברשימה
+     */
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
         Question question = questionList.get(position);
@@ -65,24 +88,40 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
                 return false;
             }
         });
-
     }
 
+    /**
+     * מחזיר את המספר הכולל של שאלות ברשימה
+     * @return מספר השאלות
+     */
     @Override
     public int getItemCount() {
         return questionList.size();
     }
 
+    /**
+     * מעדכן את רשימת השאלות כולה
+     * @param questions רשימת השאלות החדשה
+     */
     public void setQuestionList(List<Question> questions) {
         this.questionList.clear();
         this.questionList.addAll(questions);
         notifyDataSetChanged();
     }
 
+    /**
+     * מוסיף שאלה בודדת לרשימה
+     * @param question השאלה להוספה
+     */
     public void addQuestion(Question question) {
         this.questionList.add(question);
         notifyItemInserted(this.questionList.size() - 1);
     }
+
+    /**
+     * מעדכן שאלה קיימת ברשימה
+     * @param question השאלה המעודכנת
+     */
     public void updateQuestion(Question question) {
         int index = questionList.indexOf(question);
         if (index == -1) return;
@@ -90,6 +129,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         notifyItemChanged(index);
     }
 
+    /**
+     * מסיר שאלה מהרשימה
+     * @param user השאלה להסרה
+     */
     public void removeQuestion(Question user) {
         int index = questionList.indexOf(user);
         if (index == -1) return;
@@ -97,12 +140,20 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         notifyItemRemoved(index);
     }
 
+    /**
+     * מקבל שאלה במיקום ספציפי
+     * @param pos מיקום השאלה
+     * @return השאלה במיקום המבוקש, או null אם המיקום לא תקין
+     */
     public Question getByPosition(int pos) {
         if (pos < 0 || getItemCount() <= pos) return null;
         return questionList.get(pos);
     }
 
-
+    /**
+     * מחלקת מחזיק תצוגה עבור פריטי שאלה
+     * מחזיקה הפניות לתצוגות בפריט השאלה
+     */
     public static class QuestionViewHolder extends RecyclerView.ViewHolder {
         TextView tvWord, tvRightAnswer, tvWrongAnswer1, tvWrongAnswer2, tvWrongAnswer3;
 
@@ -116,12 +167,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         }
     }
 
+    /**
+     * מסיר שאלה במיקום ספציפי
+     * @param position מיקום השאלה להסרה
+     */
     public void removeItem(int position) {
         if (position < 0 || position >= questionList.size()) {
             return;
         }
         questionList.remove(position);
         notifyItemRemoved(position);
-
     }
 }

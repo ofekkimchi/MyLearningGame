@@ -16,13 +16,23 @@ import com.example.mylearninggame.R;
 import com.example.mylearninggame.Services.DatabaseService;
 import com.example.mylearninggame.utils.SharedPreferencesUtil;
 
+/**
+ * Activity for editing user details by administrators
+ * Allows modification of user information including personal details and admin status
+ */
 public class EditUser extends AppCompatActivity {
 
+    // User object to store the user being edited
     User user;
+    // UI Components for user information input
     EditText editEmail, editFName, editLName, editPhone, editPass;
     Button btnSave;
     DatabaseService databaseService;
 
+    /**
+     * Initializes the activity and sets up the UI
+     * Creates user object from intent extras and initializes all components
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +53,7 @@ public class EditUser extends AppCompatActivity {
         String password = getIntent().getStringExtra("userPassword");
         boolean isAdmin = getIntent().getBooleanExtra("userIsAdmin", false);
 
-        user = new User(id, fname, lname, phone, email, password, isAdmin);
+        user = new User(id, fname, lname, phone, email, password, isAdmin, 0, R.drawable.default_profile);
 
         databaseService = DatabaseService.getInstance();
         initviews();
@@ -51,6 +61,9 @@ public class EditUser extends AppCompatActivity {
         setupSaveButton();
     }
 
+    /**
+     * Initializes all UI components by finding their views
+     */
     private void initviews() {
         editEmail = findViewById(R.id.editEmail);
         editFName = findViewById(R.id.editFName);
@@ -60,6 +73,9 @@ public class EditUser extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
     }
 
+    /**
+     * Populates the form fields with the user's current information
+     */
     private void displayUserDetails() {
         if (user != null) {
             editEmail.setText(user.getEmail());
@@ -70,10 +86,17 @@ public class EditUser extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets up the save button click listener
+     */
     private void setupSaveButton() {
         btnSave.setOnClickListener(v -> saveUserChanges());
     }
 
+    /**
+     * Saves the updated user information to the database
+     * Updates the user object with new values and handles the database operation
+     */
     private void saveUserChanges() {
         if (user == null) return;
 

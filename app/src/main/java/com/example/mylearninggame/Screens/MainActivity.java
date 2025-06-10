@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -27,8 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnSignOut, btnLevels, btnAddQuestion, btnAdmin;
     boolean isAdmin;
     User currentUser;
-
-
+    TextView tvCoinsBalance;
+    ImageView ivProfileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         databaseService=DatabaseService.getInstance();
         initviews();
 
+        tvCoinsBalance = findViewById(R.id.tvCoinsBalance);
+        ivProfileIcon = findViewById(R.id.ivProfileIcon);
+        ivProfileIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
         if (!authenticationService.isUserSignedIn()) {
             Log.d(TAG, "User not signed in, redirecting to LandingActivity");
             Intent landingIntent = new Intent(MainActivity.this, Landing.class);
@@ -51,26 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
             return;
         }
-        databaseService.getUser(authenticationService.getCurrentUserUid(), new DatabaseService.DatabaseCallback<User>() {
-                @Override
-                public void onCompleted(User user) {
-                    if (user == null){
-                        // should not ever happened (only when clearing DB)
-                        authenticationService.signOut();
-                        return;
-                    }
-                    SharedPreferencesUtil.saveUser(getApplicationContext(), user);
-                    // update view
-                }
-
-                @Override
-                public void onFailed(Exception e) {
-                    Log.w(TAG, "getUser:failure", e);
-                    Toast.makeText(getApplicationContext(), "Could not get user",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        );
+        // Initial user load and UI update
+        loadUserAndSetUI();
 
         currentUser = SharedPreferencesUtil.getUser(this);
         Log.i(TAG, currentUser.toString());
@@ -79,8 +70,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         isAdmin =currentUser.getIsAdmin();
         if(!isAdmin){
             btnAddQuestion.setVisibility(View.GONE);
+            btnAdmin.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Update coins balance and profile picture
+        User user = SharedPreferencesUtil.getUser(this);
+        if (user != null) {
+            tvCoinsBalance.setText(String.valueOf(user.getCoins()));
+            ivProfileIcon.setImageResource(user.getProfilePictureId());
+        } else {
+            // Handle case where user is null (e.g., not logged in)
+            // Maybe redirect to login or show default values
+            tvCoinsBalance.setText("0");
+            ivProfileIcon.setImageResource(R.drawable.default_profile);
+        }
+    }
+
+    private void loadUserAndSetUI() {
+        databaseService.getUser(authenticationService.getCurrentUserUid(), new DatabaseService.DatabaseCallback<User>() {
+            @Override
+            public void onCompleted(User user) {
+                if (user == null){
+                    // should not ever happened (only when clearing DB)
+                    authenticationService.signOut();
+                    return;
+                }
+                SharedPreferencesUtil.saveUser(getApplicationContext(), user);
+                currentUser = user; // Update currentUser object
+                updateUI(); // Update UI after loading user
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Log.w(TAG, "getUser:failure", e);
+                Toast.makeText(getApplicationContext(), "Could not get user",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateUI() {
+        if (currentUser != null) {
+            tvCoinsBalance.setText(String.valueOf(currentUser.getCoins()));
+            ivProfileIcon.setImageResource(currentUser.getProfilePictureId());
+            Log.d(TAG, "Profile picture ID in MainActivity: " + currentUser.getProfilePictureId());
+        }
     }
 
     private void initviews() {
