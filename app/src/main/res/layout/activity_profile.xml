@@ -115,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Buy"
+                android:gravity="center"
                 android:padding="12dp"
                 app:cornerRadius="12dp" />
         </LinearLayout>
@@ -156,6 +157,7 @@
                 android:id="@+id/btnBuyProfile2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Buy"
                 android:padding="12dp"
                 app:cornerRadius="12dp" />
@@ -198,6 +200,7 @@
                 android:id="@+id/btnBuyProfile3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Buy"
                 android:padding="12dp"
                 app:cornerRadius="12dp" />
@@ -244,6 +247,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Buy"
+                android:gravity="center"
                 android:padding="12dp"
                 app:cornerRadius="12dp" />
         </LinearLayout>
@@ -286,6 +290,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Buy"
+                android:gravity="center"
                 android:padding="12dp"
                 app:cornerRadius="12dp" />
         </LinearLayout>

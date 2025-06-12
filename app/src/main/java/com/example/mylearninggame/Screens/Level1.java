@@ -17,16 +17,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import android.content.res.ColorStateList;
+import androidx.core.content.ContextCompat;
 
 import com.example.mylearninggame.Model.User;
 import com.example.mylearninggame.R;
 import com.example.mylearninggame.Services.DatabaseService;
 import com.example.mylearninggame.utils.SharedPreferencesUtil;
 import com.example.mylearninggame.Model.Question;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import android.graphics.Color;
 
 /**
  * Level 1 game screen implementation
@@ -130,9 +134,10 @@ public class Level1 extends AppCompatActivity {
             return;
         }
 
-        // Re-enable all buttons at the start of a new question
+        // Re-enable all buttons and reset their colors at the start of a new question
         for (Button button : answerButtons) {
             button.setEnabled(true);
+            ((MaterialButton) button).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4A90E2")));
         }
 
         Question currentQuestion = questions.get(currentQuestionIndex);
@@ -194,6 +199,13 @@ public class Level1 extends AppCompatActivity {
         if (selectedAnswer.equals(question.getRightAnswer())) {
             timer.cancel();
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+            // Set the correct answer button to its default color (blue)
+            for (Button button : answerButtons) {
+                if (button.getText().equals(selectedAnswer)) {
+                    ((MaterialButton) button).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4A90E2")));
+                    break;
+                }
+            }
             currentQuestionIndex++;
             startQuestion();
         } else {
@@ -202,7 +214,7 @@ public class Level1 extends AppCompatActivity {
             for (Button button : answerButtons) {
                 if (button.getText().equals(selectedAnswer)) {
                     button.setEnabled(false);
-                    button.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                    ((MaterialButton) button).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#A9A9A9"))); // Darker Gray
                     break;
                 }
             }

@@ -31,7 +31,8 @@
             android:text="Start Level"
             android:textAllCaps="false"
             android:padding="12dp"
-            app:cornerRadius="12dp" />
+            app:cornerRadius="12dp"
+            android:gravity="center" />
 
     </LinearLayout>
 

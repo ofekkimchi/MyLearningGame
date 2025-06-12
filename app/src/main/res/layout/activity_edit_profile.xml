@@ -131,6 +131,7 @@
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="שמור שינויים"
             android:padding="12dp"
             app:cornerRadius="12dp"/>

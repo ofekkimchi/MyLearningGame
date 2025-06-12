@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.MyLearningGame" parent="Base.Theme.MyLearningGame" />
+
+    <style name="Widget.Material3.Button" parent="Widget.Material3.Button.UnelevatedButton">
+        <item name="backgroundTint">@color/button_background</item>
+    </style>
 </resources>

@@ -17,26 +17,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 
 import com.example.mylearninggame.Model.User;
 import com.example.mylearninggame.R;
 import com.example.mylearninggame.Services.DatabaseService;
 import com.example.mylearninggame.utils.SharedPreferencesUtil;
 import com.example.mylearninggame.Model.Question;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Level3 extends AppCompatActivity {
+    // UI Components
     private TextView timerText;
     private TextView wordToTranslate;
     private Button[] answerButtons;
     private ImageView[] hearts;
+
+    // Game State
     private CountDownTimer timer;
     private int remainingHearts = 3;
     private int currentQuestionIndex = 0;
     private List<Question> questions;
+
+    // Services and Data
     private DatabaseService databaseService;
     private User currentUser;
     private int levelNumber = 3; // This is Level 3
@@ -52,6 +61,7 @@ public class Level3 extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize services and get current user
         databaseService = DatabaseService.getInstance();
         currentUser = SharedPreferencesUtil.getUser(this);
 
@@ -59,6 +69,9 @@ public class Level3 extends AppCompatActivity {
         setupQuestions();
     }
 
+    /**
+     * Initializes all UI components by finding their views
+     */
     private void initializeViews() {
         timerText = findViewById(R.id.timerText);
         wordToTranslate = findViewById(R.id.wordToTranslate);
@@ -77,19 +90,23 @@ public class Level3 extends AppCompatActivity {
         hearts[2] = findViewById(R.id.heart3);
     }
 
+    /**
+     * Loads questions from the database and filters for level 3
+     * Shuffles questions and starts the game
+     */
     private void setupQuestions() {
-        questions = new ArrayList<Question>(); // וודא שזה ArrayList<Question>()
+        questions = new ArrayList<>();
         databaseService.getQuestions(new DatabaseService.DatabaseCallback<List<Question>>() {
             @Override
             public void onCompleted(List<Question> allQuestions) {
                 // Filter only level 3 questions
                 for (Question question : allQuestions) {
-                    if (question.getLevel() == 3) { // וודא שזה level() == 3
+                    if (question.getLevel() == 3) {
                         questions.add(question);
                     }
                 }
                 Log.d("Level3", "Loaded " + questions.size() + " questions for level 3.");
-                Collections.shuffle(questions); // וודא שזה Collections.shuffle(questions)
+                Collections.shuffle(questions); // Shuffle questions
                 startQuestion(); // Start the game after loading questions
             }
 
@@ -100,6 +117,10 @@ public class Level3 extends AppCompatActivity {
         });
     }
 
+    /**
+     * Starts a new question or shows level completion dialog
+     * Sets up the question display and answer buttons
+     */
     private void startQuestion() {
         if (currentQuestionIndex >= questions.size()) {
             // Level completed successfully
@@ -109,20 +130,21 @@ public class Level3 extends AppCompatActivity {
             return;
         }
 
-        // Re-enable all buttons at the start of a new question
+        // Re-enable all buttons and reset their colors at the start of a new question
         for (Button button : answerButtons) {
             button.setEnabled(true);
+            ((MaterialButton) button).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4A90E2")));
         }
 
         Question currentQuestion = questions.get(currentQuestionIndex);
-        wordToTranslate.setText(currentQuestion.getWord()); // וודא שזה getWord()
+        wordToTranslate.setText(currentQuestion.getWord());
 
         // Create a list of all answers (right and wrong) and shuffle them
         List<String> answers = new ArrayList<>();
-        answers.add(currentQuestion.getRightAnswer()); // וודא שזה getRightAnswer()
-        answers.add(currentQuestion.getWrongAnswer1()); // וודא שזה getWrongAnswer1()
-        answers.add(currentQuestion.getWrongAnswer2()); // וודא שזה getWrongAnswer2()
-        answers.add(currentQuestion.getWrongAnswer3()); // וודא שזה getWrongAnswer3()
+        answers.add(currentQuestion.getRightAnswer());
+        answers.add(currentQuestion.getWrongAnswer1());
+        answers.add(currentQuestion.getWrongAnswer2());
+        answers.add(currentQuestion.getWrongAnswer3());
         Collections.shuffle(answers);
 
         // Set answers to buttons
@@ -135,6 +157,10 @@ public class Level3 extends AppCompatActivity {
         startTimer();
     }
 
+    /**
+     * Starts the countdown timer for the current question
+     * Handles timer completion and game over conditions
+     */
     private void startTimer() {
         if (timer != null) {
             timer.cancel();
@@ -152,19 +178,31 @@ public class Level3 extends AppCompatActivity {
                 updateHearts();
                 if (remainingHearts <= 0) {
                     showGameOverDialog();
-                } else {
-                    for (Button button : answerButtons) {
-                        button.setEnabled(false);
-                    }
                 }
+                // else {
+                //     for (Button button : answerButtons) {
+                //         button.setEnabled(false);
+                //     }
+                // }
             }
         }.start();
     }
 
+    /**
+     * Checks if the selected answer is correct
+     * Handles correct/incorrect answer logic and game progression
+     */
     private void checkAnswer(String selectedAnswer, Question question) {
         if (selectedAnswer.equals(question.getRightAnswer())) {
             timer.cancel();
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+            // Set the correct answer button to its default color (blue)
+            for (Button button : answerButtons) {
+                if (button.getText().equals(selectedAnswer)) {
+                    ((MaterialButton) button).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4A90E2")));
+                    break;
+                }
+            }
             currentQuestionIndex++;
             startQuestion();
         } else {
@@ -173,7 +211,7 @@ public class Level3 extends AppCompatActivity {
             for (Button button : answerButtons) {
                 if (button.getText().equals(selectedAnswer)) {
                     button.setEnabled(false);
-                    button.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                    ((MaterialButton) button).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#A9A9A9"))); // Darker Gray
                     break;
                 }
             }
@@ -188,12 +226,19 @@ public class Level3 extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the hearts display based on remaining lives
+     */
     private void updateHearts() {
         for (int i = 0; i < hearts.length; i++) {
             hearts[i].setVisibility(i < remainingHearts ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
+    /**
+     * Calculates coins earned based on remaining hearts
+     * @return The number of coins earned
+     */
     private int calculateCoins() {
         int baseCoins;
         switch (remainingHearts) {
@@ -210,10 +255,14 @@ public class Level3 extends AppCompatActivity {
                 baseCoins = 0;
                 break;
         }
-        // Adjust coins based on level number (Level 3: base + 50)
+        // Adjust coins based on level number
         return baseCoins + (levelNumber - 1) * 25;
     }
 
+    /**
+     * Updates the user's coin balance in the database
+     * @param earnedCoins The number of coins to add
+     */
     private void updateUserCoins(int earnedCoins) {
         if (currentUser != null) {
             currentUser.setCoins(currentUser.getCoins() + earnedCoins);
@@ -232,6 +281,10 @@ public class Level3 extends AppCompatActivity {
         }
     }
 
+    /**
+     * Shows the level completion dialog with earned coins
+     * @param earnedCoins The number of coins earned
+     */
     private void showLevelCompletedDialog(int earnedCoins) {
         new AlertDialog.Builder(this)
                 .setTitle("Level Completed!")
@@ -246,6 +299,9 @@ public class Level3 extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * Shows the game over dialog when player loses all hearts
+     */
     private void showGameOverDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Game Over!")
@@ -260,14 +316,19 @@ public class Level3 extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * Resets the level state for replay
+     */
     private void resetLevel() {
         currentQuestionIndex = 0;
         remainingHearts = 3;
         updateHearts();
-        setupQuestions(); // Reshuffle questions for replay
-        startQuestion();
+        setupQuestions(); // Re-load questions for replay
     }
 
+    /**
+     * Cleans up resources when the activity is destroyed
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
