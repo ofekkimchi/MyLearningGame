@@ -186,6 +186,8 @@ public class Level1 extends AppCompatActivity {
                     for (Button button : answerButtons) {
                         button.setEnabled(false);
                     }
+                    currentQuestionIndex++;
+                    startQuestion();
                 }
             }
         }.start();
